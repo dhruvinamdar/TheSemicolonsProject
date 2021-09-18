@@ -13,10 +13,12 @@ public class Customer {
 	private int customerContact;
 	private int customerPincode;
 	
+	// default constructor
 	public Customer() {
 		super();
 	}
-
+	
+	// parameterized constructor
 	public Customer(int customerId, String customerName, float customerGST, String customerAddress, String customerCity,
 			String customerEmail, int customerContact, int customerPincode) {
 		super();
@@ -29,7 +31,8 @@ public class Customer {
 		this.customerContact = customerContact;
 		this.customerPincode = customerPincode;
 	}
-
+	
+	// getter-setter methods
 	public int getCustomerId() {
 		return customerId;
 	}
