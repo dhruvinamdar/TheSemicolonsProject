@@ -2,6 +2,7 @@ package com.orderProcessing.beans;
 
 public class Product {
 	private int product_id;
+	private int price;
 	private String Product_name;
 	private String Category;
 	 
