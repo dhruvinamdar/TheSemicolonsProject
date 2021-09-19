@@ -29,7 +29,14 @@ public class Product {
 	public void setProduct_id(int product_id) {
 		this.product_id = product_id;
 	}
+       public int getPrice() {
+		return product_id;
+	}
 
+
+	public void setPrice(int product_id) {
+		this.product_id = product_id;
+	}
 
 	public String getProduct_name() {
 		return Product_name;
@@ -58,6 +65,7 @@ public class Product {
 		result = prime * result + ((Category == null) ? 0 : Category.hashCode());
 		result = prime * result + ((Product_name == null) ? 0 : Product_name.hashCode());
 		result = prime * result + product_id;
+		result = prime * result + price;
 		return result;
 	}
 
@@ -83,13 +91,15 @@ public class Product {
 			return false;
 		if (product_id != other.product_id)
 			return false;
+		if (price != other.price)
+			return false;
 		return true;
 	}
 
-
-	@Override
+@Override
 	public String toString() {
-		return "Product [product_id=" + product_id + ", Product_name=" + Product_name + ", Category=" + Category + "]";
+		return "Product [product_id=" + product_id + ", Product_name=" + Product_name + ", Category=" + Category
+				+ ", price=" + price + "]";
 	}
 
 }
