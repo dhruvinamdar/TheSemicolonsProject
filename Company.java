@@ -5,19 +5,19 @@ public class Company  {
         private String companyName;
         private String companyAddress;
         private String companyCity;
-        private String companyGST_Number;
+        private String companyGstNumber;
         
         public Company() {
                   super();
         }
 	
-        public Company(String companyId, String companyName, String companyAddress, String companyCity, String companyGST_Number) {
+        public Company(String companyId, String companyName, String companyAddress, String companyCity, String companyGstNumber) {
 		super();
 		this.companyId = companyId;
 		this.companyName = companyName;
 		this.companyAddress = companyAddress;
 		this.companyCity = companyCity;
-		this.companyGST_Number = companyGST_Number;
+		this.companyGstNumber = companyGstNumber;
         }
 
          
@@ -45,18 +45,18 @@ public class Company  {
 	public void setcompanyCity(String companyCity) {
 		this.companyCity = companyCity;
 	}
-        public String getcompanyGST_Number() {
-		return companyGST_Number;
+        public String getcompanyGstNumber() {
+		return companyGstNumber;
 	}
-	public void setcompanyGST_Number(String companyGST_Number) {
-		this.companyGST_Number = companyGST_Number;
+	public void setcompanyGstNumber(String companyGstNumber) {
+		this.companyGstNumber = companyGstNumber;
 	}
 
         
         @Override
 	public String toString() {
 		return "CompanyImpl [companyId=" + companyId + ", companyName=" + companyName + ", companyAddress="
-				+ companyAddress + ", companyCity=" + companyCity + ", companyGST_Number=" + companyGST_Number + "]";
+				+ companyAddress + ", companyCity=" + companyCity + ", companyGstNumber=" + companyGstNumber + "]";
 	}
 	
 	@Override
@@ -67,7 +67,7 @@ public class Company  {
 		result = prime * result + ((companyName == null) ? 0 : companyName.hashCode());
 		result = prime * result + ((companyAddress == null) ? 0 : companyAddress.hashCode());
 		result = prime * result + ((companyCity == null) ? 0 : companyCity.hashCode());
-		result = prime * result + ((companyGST_Number == null) ? 0 : companyGST_Number.hashCode());
+		result = prime * result + ((companyGstNumber == null) ? 0 : companyGstNumber.hashCode());
 		return result;
 	}
 
@@ -101,10 +101,10 @@ public class Company  {
 				return false;
 		} else if (!companyCity.equals(other.companyCity))
 			return false;
-		if (companyGST_Number == null) {
-			if (other.companyGST_Number != null)
+		if (companyGstNumber == null) {
+			if (other.companyGstNumber != null)
 				return false;
-		} else if (!companyGST_Number.equals(other.companyGST_Number))
+		} else if (!companyGstNumber.equals(other.companyGstNumber))
 			return false;
 		return true;
 	}
