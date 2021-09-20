@@ -14,12 +14,12 @@ public class DBUtils {
 		else {
 			try {
 				if (connection == null) {
-					String url = "jdbc:mysql://localhost:3306/day11?useSSL=false";
+					String url = "jdbc:mysql://localhost:3306/ORDER_PROCESSING?useSSL=false";
 					String username = "root";
 					String password = "root";
 					DriverManager.registerDriver(new com.mysql.cj.jdbc.Driver());
 					connection = DriverManager.getConnection(url, username, password);
-					// connection.setAutoCommit(false);
+					connection.setAutoCommit(false);
 				}
 			} catch (SQLException e) {
 				e.printStackTrace();
