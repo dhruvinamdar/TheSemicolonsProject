@@ -1,4 +1,4 @@
-package com.orderprocessing.employee.beans;
+package com.orderprocessing.entity;
 
 import java.time.LocalDateTime;
 import java.util.Date;
