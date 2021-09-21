@@ -1,3 +1,4 @@
+#test_push_file
 CREATE database ORDER_PROCESSING
 USE ORDER_PROCESSING
 CREATE TABLE `order_processing`.`company` (
