@@ -39,8 +39,8 @@ public class EmployeeDaoImpl implements EmployeeDao {
 
 	@Override
 	public Employee login(String id, String password) throws EmployeeNotFoundException {
-		PreparedStatement stmt = null;
-		ResultSet resultSet = null;
+		stmt = null;
+		resultSet = null;
 		Employee employee = new Employee();
 		try {
 			stmt = connection.prepareStatement(FIND_EMPLOYEE_BY_ID);
@@ -48,21 +48,22 @@ public class EmployeeDaoImpl implements EmployeeDao {
 			stmt.setString(2, password);
 			resultSet = stmt.executeQuery();
 			if (resultSet.next()) {
-//				employee.setId(resultSet.getInt(1));
-//				System.out.println();
-//				System.out.println(resultSet.getString(2));
 
 				employee.setEmployeeId(resultSet.getString(1));
 				employee.setEmployeeName(resultSet.getString(2));
 				employee.setEmployeePassword("");
+				employee.setLastLoginDateTime(resultSet.getTimestamp(4));
 
 				// Have to set it employee.setLastLoginDateTime(());
 
 				return employee;
 
-			}
+			} else
+				throw new EmployeeNotFoundException();
+
 		} catch (SQLException ex) {
 			ex.printStackTrace();
+
 		} finally {
 			try {
 				if (resultSet != null)

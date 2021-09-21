@@ -8,8 +8,10 @@ import com.orderprocessing.entity.ProductsInsertionStatus;
 
 public interface EmployeeService {
 
-	Employee login(String id,String password);
+	Employee login(String id, String password);
+
 	List<Order> getOrders();
+
 	ProductsInsertionStatus importProducts(String productJSON);
-	
+
 }

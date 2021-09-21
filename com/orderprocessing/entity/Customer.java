@@ -3,9 +3,9 @@ package com.orderprocessing.entity;
 import java.util.Objects;
 
 public class Customer {
-	private int customerId;
+	private String customerId;
 	private String customerName;
-	private float customerGST;
+	private String customerGST;
 	private String customerAddress;
 	private String customerCity;
 	private String customerEmail;
@@ -18,8 +18,8 @@ public class Customer {
 	}
 
 	// parameterized constructor
-	public Customer(int customerId, String customerName, float customerGST, String customerAddress, String customerCity,
-			String customerEmail, int customerContact, int customerPincode) {
+	public Customer(String customerId, String customerName, String customerGST, String customerAddress,
+			String customerCity, String customerEmail, int customerContact, int customerPincode) {
 		super();
 
 		this.customerId = customerId;
@@ -33,11 +33,11 @@ public class Customer {
 	}
 
 	// getter-setter methods
-	public int getCustomerId() {
+	public String getCustomerId() {
 		return customerId;
 	}
 
-	public void setCustomerId(int customerId) {
+	public void setCustomerId(String customerId) {
 		this.customerId = customerId;
 	}
 
@@ -49,11 +49,11 @@ public class Customer {
 		this.customerName = customerName;
 	}
 
-	public float getCustomerGST() {
+	public String getCustomerGST() {
 		return customerGST;
 	}
 
-	public void setCustomerGST(float customerGST) {
+	public void setCustomerGST(String customerGST) {
 		this.customerGST = customerGST;
 	}
 
@@ -114,9 +114,8 @@ public class Customer {
 		Customer other = (Customer) obj;
 		return Objects.equals(customerAddress, other.customerAddress)
 				&& Objects.equals(customerCity, other.customerCity) && customerContact == other.customerContact
-				&& Objects.equals(customerEmail, other.customerEmail)
-				&& Float.floatToIntBits(customerGST) == Float.floatToIntBits(other.customerGST)
-				&& customerId == other.customerId && Objects.equals(customerName, other.customerName)
+				&& Objects.equals(customerEmail, other.customerEmail) && Objects.equals(customerGST, other.customerGST)
+				&& Objects.equals(customerId, other.customerId) && Objects.equals(customerName, other.customerName)
 				&& customerPincode == other.customerPincode;
 	}
 
