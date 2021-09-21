@@ -2,10 +2,13 @@ package com.orderprocessing.dao;
 
 import java.util.List;
 
+import com.orderprocessing.beans.Customer;
 import com.orderprocessing.beans.Order;
 
 //Customer Dao interface
 public interface CustomerDao {
+	
+	public Customer checkCredentials(String customerName, String customerId, String password);
 	
 	public List<Order> displayQuoteDetails();
 	
@@ -15,5 +18,6 @@ public interface CustomerDao {
 
 	public List<Order> displayOrderDetails();
 
-	public void displayOrderInvoice();
+	public List<Invoice> displayOrderInvoice();
+
 }
