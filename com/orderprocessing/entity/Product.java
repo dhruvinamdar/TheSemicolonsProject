@@ -1,74 +1,68 @@
 package com.orderprocessing.entity;
 
+import java.util.Objects;
+
 public class Product {
-	private int product_id;
+	private int productId;
 	private int price;
-	private String Product_name;
-	private String Category;
-	 
-	 
+	private String productName;
+	private String category;
+
 	public Product() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-
-	public Product(int product_id, String product_name, String category) {
+	public Product(int productId, int price, String productName, String category) {
 		super();
-		this.product_id = product_id;
-		Product_name = product_name;
-		Category = category;
+		this.productId = productId;
+		this.price = price;
+		this.productName = productName;
+		this.category = category;
 	}
 
-
-	public int getProduct_id() {
-		return product_id;
+	public int getProductId() {
+		return productId;
 	}
 
-
-	public void setProduct_id(int product_id) {
-		this.product_id = product_id;
-	}
-       public int getPrice() {
-		return product_id;
+	public void setProductId(int productId) {
+		this.productId = productId;
 	}
 
-
-	public void setPrice(int product_id) {
-		this.product_id = product_id;
+	public int getPrice() {
+		return price;
 	}
 
-	public String getProduct_name() {
-		return Product_name;
+	public void setPrice(int price) {
+		this.price = price;
 	}
 
-
-	public void setProduct_name(String product_name) {
-		Product_name = product_name;
+	public String getProductName() {
+		return productName;
 	}
 
+	public void setProductName(String productName) {
+		this.productName = productName;
+	}
 
 	public String getCategory() {
-		return Category;
+		return category;
 	}
-
 
 	public void setCategory(String category) {
-		Category = category;
+		this.category = category;
 	}
 
+	@Override
+	public String toString() {
+		return "Product [productId=" + productId + ", price=" + price + ", productName=" + productName + ", category="
+				+ category + "]";
+	}
 
 	@Override
 	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((Category == null) ? 0 : Category.hashCode());
-		result = prime * result + ((Product_name == null) ? 0 : Product_name.hashCode());
-		result = prime * result + product_id;
-		result = prime * result + price;
-		return result;
+		return Objects.hash(category, price, productId, productName);
 	}
-
 
 	@Override
 	public boolean equals(Object obj) {
@@ -79,27 +73,8 @@ public class Product {
 		if (getClass() != obj.getClass())
 			return false;
 		Product other = (Product) obj;
-		if (Category == null) {
-			if (other.Category != null)
-				return false;
-		} else if (!Category.equals(other.Category))
-			return false;
-		if (Product_name == null) {
-			if (other.Product_name != null)
-				return false;
-		} else if (!Product_name.equals(other.Product_name))
-			return false;
-		if (product_id != other.product_id)
-			return false;
-		if (price != other.price)
-			return false;
-		return true;
-	}
-
-@Override
-	public String toString() {
-		return "Product [product_id=" + product_id + ", Product_name=" + Product_name + ", Category=" + Category
-				+ ", price=" + price + "]";
+		return Objects.equals(category, other.category) && price == other.price && productId == other.productId
+				&& Objects.equals(productName, other.productName);
 	}
 
 }
