@@ -60,8 +60,26 @@ CREATE TABLE IF NOT EXISTS `order_processing`.`employee` (
   `EMPLOYEE_ID` INT NOT NULL,
   `EMPLOYEE_NAME` VARCHAR(30) NOT NULL,
   `EMPLOYEE_PASSWORD` VARCHAR(15) NOT NULL,
-  `LAST_LOGGIN_DATETIME` DATETIME NOT NULL,
+  `LAST_LOGGIN_DATETIME` TIMESTAMP NOT NULL,
   PRIMARY KEY (`EMPLOYEE_ID`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
+
+
+-- -----------------------------------------------------
+-- Table `order_processing`.`order_line`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `order_processing`.`order_line` (
+  `ORDER_ID` VARCHAR(10) NOT NULL,
+  `CUSTOMER_ID` VARCHAR(10) NULL DEFAULT NULL,
+  `PRODUCT_ID` VARCHAR(10) NOT NULL,
+  `QUANTITY` INT NOT NULL,
+  PRIMARY KEY (`ORDER_ID`),
+  INDEX `CUSTOMER_ID_idx` (`CUSTOMER_ID` ASC) VISIBLE,
+  CONSTRAINT `CUSTOMER_ID`
+    FOREIGN KEY (`CUSTOMER_ID`)
+    REFERENCES `order_processing`.`customer` (`CUSTOMER_ID`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
@@ -73,39 +91,29 @@ COLLATE = utf8mb4_0900_ai_ci;
 CREATE TABLE IF NOT EXISTS `order_processing`.`invoice` (
   `INVOICE_ID` VARCHAR(10) NOT NULL,
   `INVOICE_DATE` DATE NOT NULL,
-  `TOTAL_GST_VALUE` INT NOT NULL,
-  `TOATL_INVOICE_VALUE` INT NOT NULL,
+  `TOTAL_GST_VALUE` FLOAT NOT NULL,
+  `TOTAL_INVOICE_VALUE` FLOAT NOT NULL,
   `INVOICE_STATUS` VARCHAR(20) NOT NULL,
-  PRIMARY KEY (`INVOICE_ID`))
+  `ORDER_ID` VARCHAR(45) NULL DEFAULT NULL,
+  PRIMARY KEY (`INVOICE_ID`),
+  CONSTRAINT `ORDER_ID`
+    FOREIGN KEY (`INVOICE_ID`)
+    REFERENCES `order_processing`.`order_line` (`ORDER_ID`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
 
 
 -- -----------------------------------------------------
--- Table `order_processing`.`order`
+-- Table `order_processing`.`orders`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `order_processing`.`order` (
+CREATE TABLE IF NOT EXISTS `order_processing`.`orders` (
   `ORDER_ID` VARCHAR(10) NOT NULL,
   `ORDER_DATE` DATE NOT NULL,
+  `TOTAL_ORDER_VALUE` FLOAT NOT NULL DEFAULT '0',
+  `STATUS` VARCHAR(30) NOT NULL,
+  `STATUS_DATE` DATE NULL DEFAULT NULL,
   PRIMARY KEY (`ORDER_ID`))
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8mb4
-COLLATE = utf8mb4_0900_ai_ci;
-
-
--- -----------------------------------------------------
--- Table `order_processing`.`order_line`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `order_processing`.`order_line` (
-  `ORDER_ID` VARCHAR(10) NOT NULL,
-  `CUSTOMER_SHIPPING_ADDRESS_LINE1` VARCHAR(40) NOT NULL,
-  `CUSTOMER_SHIPPING_ADDRESS_CITY` VARCHAR(45) NULL DEFAULT NULL,
-  `CUSTOMER_SHIPPING_ADDRESS_STATE` VARCHAR(45) NULL DEFAULT NULL,
-  PRIMARY KEY (`ORDER_ID`),
-  CONSTRAINT `CUSTOMER_ID`
-    FOREIGN KEY (`ORDER_ID`)
-    REFERENCES `order_processing`.`customer` (`CUSTOMER_ID`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
@@ -117,7 +125,7 @@ COLLATE = utf8mb4_0900_ai_ci;
 CREATE TABLE IF NOT EXISTS `order_processing`.`product` (
   `PRODUCT_ID` INT NOT NULL,
   `PRODUCT_NAME` VARCHAR(20) NOT NULL,
-  `PRODUCT_PRICE` INT NOT NULL,
+  `PRODUCT_PRICE` FLOAT NOT NULL,
   `PRODUCT_CATEGORY` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`PRODUCT_ID`))
 ENGINE = InnoDB
