@@ -41,6 +41,10 @@ public class LoginServlet extends HttpServlet {
 					RequestDispatcher rd= getServletContext().getRequestDispatcher("/Welcome.html");
 					rd.forward(request, response);
 				}
+				else {
+					RequestDispatcher rd= getServletContext().getRequestDispatcher("/Login.html");
+					rd.forward(request, response);
+				}
 			}
 			else {
 				RequestDispatcher rd= getServletContext().getRequestDispatcher("/Login.html");
