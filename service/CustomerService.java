@@ -3,22 +3,25 @@ package com.orderprocessing.service;
 import java.util.List;
 
 import com.orderprocessing.utility.Customer;
+import com.orderprocessing.utility.Invoice;
 import com.orderprocessing.utility.Order;
 
 // Customer Service interface
 public interface CustomerService {
 	
-	public Customer validateCustomer(String customerName, String customerId, String password);
+	public Customer validateCustomer(String customerLogin, String password);
+	
+	public String getCustomer(String customerIdOrName);
 	
 	public List<Order> displayQuote();
 	
-	public List<Order> displayAllQuoteDetails();
+	public Order displayAllQuoteDetails(String orderId);
 
-	public void changeQuoteStatus(Order orderObj);
+	public void changeQuoteStatus(String orderId);
 	
 	public List<Order> displayOrder();
 	
-	public List<Invoice> showInvoice();
+	public Invoice showInvoice(String orderId);
 
 	
 }
