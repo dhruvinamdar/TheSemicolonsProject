@@ -150,20 +150,18 @@ public class CustomerDaoImpl implements CustomerDao {
 	}
 
 	// method to display invoice details
-	public List<Invoice> displayOrderInvoice() {
-		String sql = "select current_date(), invoice.INVOICE_ID, invoice.INVOICE_DATE, invoice.TOTAL_GST_VALUE, invoice.TOATL_INVOICE_VALUE, invoice.INVOICE_STATUS from invoice, testorder where current_date() = testorder.STATUS_DATE";
+	public Invoice displayOrderInvoice() {
+		String sql = " select invoice.ORDER_ID, invoice.INVOICE_ID, invoice.INVOICE_DATE, invoice.TOTAL_GST_VALUE, invoice.TOATL_INVOICE_VALUE, invoice.INVOICE_STATUS from invoice, testorder where testorder.ORDER_ID = invoice.ORDER_ID and current_date() > testorder.STATUS_DATE;";
 		try {
 			prepStatement = conn.prepareStatement(sql);
-			List<Invoice> invoiceList = new ArrayList<>();
+			Invoice invoice;
 			ResultSet rs = prepStatement.executeQuery(sql);
-			while(rs.next()) {
-				invoiceList.add(new Invoice(rs.getString(1), rs.getDate(2), rs.getInt(3), rs.getInt(4), rs.getString(5)));
-			}
-			return invoiceList;
+			invoice = new Invoice(rs.getString(1), rs.getDate(2), rs.getFloat(3), rs.getFloat(4), rs.getString(5), rs.getString(6));
+			return invoice;
 		}
 		catch(SQLException e) {
 			e.printStackTrace();
 		}
 		return null;
-	}	
+	}
 }
