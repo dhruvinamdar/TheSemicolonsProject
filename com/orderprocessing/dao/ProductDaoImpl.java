@@ -9,7 +9,7 @@ import java.util.List;
 
 import com.orderprocessing.entity.Product;
 import com.orderprocessing.entity.ProductsInsertionStatus;
-import com.orderprocessing.util.DBUtil;
+import com.orderprocessing.utils.DBUtil;
 
 public class ProductDaoImpl implements ProductDao{
     

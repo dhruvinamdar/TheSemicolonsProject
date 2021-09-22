@@ -8,6 +8,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.orderprocessing.entity.ProductsInsertionStatus;
+import com.orderprocessing.service.EmployeeService;
+import com.orderprocessing.service.EmployeeServiceImpl;
+
 @WebServlet("/importProductsToDB")
 public class ImportProductsServlet extends HttpServlet{
 	private static final long serialVersionUID = 1L;
@@ -17,17 +21,17 @@ public class ImportProductsServlet extends HttpServlet{
 		
 		response.setContentType("text/html");
 		String filePath = request.getParameter("filePath");
-		//EmployeeService service = new EmployeeService();
-		//ProductsInsertionStatus productsInsertionStatus = service.insertProductsIntoDatabase(filePath);
-		//if(productsInsertionStatus!=null)
-		//{
-		//	request.getRequestDispatcher("").forward(request, response);
-		//}
-		//else
-		//{
-		//	String dataNotStoredError = "Products could not be imported";
-		//	request.setAttribute("dataNotStoredError",dataNotStoredError);
-		//	request.getRequestDispatcher("").forward(request, response);
-		//}
+		EmployeeService service = new EmployeeServiceImpl();
+//		ProductsInsertionStatus productsInsertionStatus = service.insertProductsIntoDatabase(filePath);
+//		if(productsInsertionStatus!=null)
+//		{
+//			request.getRequestDispatcher("").forward(request, response);
+//		}
+//		else
+//		{
+//			String dataNotStoredError = "Products could not be imported";
+//			request.setAttribute("dataNotStoredError",dataNotStoredError);
+//			request.getRequestDispatcher("").forward(request, response);
+//		}
 	}
 }

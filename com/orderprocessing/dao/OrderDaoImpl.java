@@ -10,7 +10,7 @@ import java.util.List;
 import com.orderprocessing.entity.Employee;
 import com.orderprocessing.entity.Order;
 import com.orderprocessing.exception.NoOrderFoundException;
-import com.orderprocessing.util.DBUtil;
+import com.orderprocessing.utils.DBUtil;
 
 public class OrderDaoImpl implements OrderDao{
 	

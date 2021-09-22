@@ -23,7 +23,7 @@ import java.sql.SQLException;
 
 import com.orderprocessing.entity.Employee;
 import com.orderprocessing.exception.EmployeeNotFoundException;
-import com.orderprocessing.util.DBUtil;
+import com.orderprocessing.utils.DBUtil;
 
 public class EmployeeDaoImpl implements EmployeeDao {
 
