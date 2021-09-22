@@ -31,31 +31,32 @@ public class CustomerLoginServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		PrintWriter out=response.getWriter();
 		response.setContentType("text/html");
-		String customerName = request.getParameter("customerName");
-		String customerId = request.getParameter("customerId");
+		//String customerName = request.getParameter("customerName");
+		String customerLogin = request.getParameter("customerId");
 		String customerPassword = request.getParameter("password");
 		CustomerService cservice = new CustomerServiceImpl();
-		Customer customer = cservice.validateCustomer(customerName, customerId, customerPassword);
+		Customer customer = cservice.validateCustomer(customerLogin, customerPassword);
 		
 		   
 		if(customer!=null){
-			HttpSession  session=request.getSession();
-			session.setMaxInactiveInterval(20);
-			if(session.isNew()) {
-				System.out.print("new session");
+			HttpSession session = request.getSession(false);
+			//session.setMaxInactiveInterval(20);
+			if(session == null) {
+				//System.out.print("new session");
+				session = request.getSession(true);
+				session.setAttribute("customer", customer);
 			}
 			else {
 				session.invalidate();
 				session=request.getSession(true);
-				 
 			}
-			session.setAttribute("customer", customer);
-			RequestDispatcher rd=request.getRequestDispatcher("displayOrders");
+			
+			RequestDispatcher rd=request.getRequestDispatcher("CustomerViewOrdersServlet");
 			rd.forward(request, response);
 		}
 		else {
 			out.println("<h1>Please enter the correct credentials</h1>");
-			RequestDispatcher rd=request.getRequestDispatcher("login.jsp");
+			RequestDispatcher rd=request.getRequestDispatcher("login.html");
 			rd.include(request, response);
 			
 			
