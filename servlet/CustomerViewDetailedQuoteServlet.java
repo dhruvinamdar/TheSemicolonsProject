@@ -25,7 +25,7 @@ public class CustomerViewDetailedQuoteServlet extends HttpServlet {
 		if(session != null && session.getAttribute("customer") != null) {
 			String orderId = request.getParameter("orderId");
 			CustomerService cservice = new CustomerServiceImpl();
-			Order quote = cservice.displayAllQuoteDetails(orderId); 
+			List<Object> quote = cservice.displayAllQuoteDetails(orderId); 
 			request.setAttribute("detailedQuote", quote);
 			//request.setAttribute("order", quote);
 			RequestDispatcher rd = request.getRequestDispatcher("displayDetailedQuote.jsp");

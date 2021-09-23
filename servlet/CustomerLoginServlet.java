@@ -32,7 +32,7 @@ public class CustomerLoginServlet extends HttpServlet {
 		PrintWriter out=response.getWriter();
 		response.setContentType("text/html");
 		//String customerName = request.getParameter("customerName");
-		String customerLogin = request.getParameter("customerId");
+		String customerLogin = request.getParameter("customerNameOrId");
 		String customerPassword = request.getParameter("password");
 		CustomerService cservice = new CustomerServiceImpl();
 		Customer customer = cservice.validateCustomer(customerLogin, customerPassword);

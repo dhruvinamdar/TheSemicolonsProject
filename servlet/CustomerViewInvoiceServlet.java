@@ -1,6 +1,7 @@
 package com.orderprocessing.servlet;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -23,7 +24,7 @@ public class CustomerViewInvoiceServlet extends HttpServlet {
 		if(session != null && session.getAttribute("customer") != null) {
 			String orderId = request.getParameter("orderId");
 			CustomerService cservice = new CustomerServiceImpl();
-			Invoice invoice = cservice.showInvoice(orderId);
+			List<Object> invoice = cservice.showInvoice(orderId);
 			request.setAttribute("invoice", invoice);
 			RequestDispatcher rd = request.getRequestDispatcher("displayInvoice.jsp");
 			rd.forward(request, response);
