@@ -1,8 +1,12 @@
 package com.orderprocessing.dao;
 
-import com.orderprocessing.utility.Invoice;
+import java.util.List;
 
+/*
+ *  Invoice Dao Interface
+ *  This is the blueprint for Invoice Dao Implementation Class.
+ */
 public interface InvoiceDao {
 	
-	public Invoice displayOrderInvoice(String orderId);
+	public List<Object> displayOrderInvoice(String orderId);
 }
