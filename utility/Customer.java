@@ -4,11 +4,12 @@ import java.util.Objects;
 
 public class Customer {
 
-	private String customerId;
+	private String customerId; 
 	private String customerName;
 	private String customerGST;
 	private String customerAddress;
 	private String customerCity;
+	private String customerState;
 	private String customerEmail;
 	private String customerContact;
 	private String customerPincode;
@@ -33,6 +34,28 @@ public class Customer {
 		this.customerContact = customerContact;
 		this.customerPincode = customerPincode;
 		this.customerPassword = customerPassword;
+	}
+	
+
+	public Customer(String customerAddress, String customerCity, String customerState) {
+		super();
+		this.customerAddress = customerAddress;
+		this.customerCity = customerCity;
+		this.customerState = customerState;
+	}
+	
+	
+
+	public Customer(String customerName, String customerAddress, String customerCity, String customerState,
+			String customerEmail, String customerContact, String customerPincode) {
+		super();
+		this.customerName = customerName;
+		this.customerAddress = customerAddress;
+		this.customerCity = customerCity;
+		this.customerState = customerState;
+		this.customerEmail = customerEmail;
+		this.customerContact = customerContact;
+		this.customerPincode = customerPincode;
 	}
 
 	// setter-getter methods
@@ -75,6 +98,14 @@ public class Customer {
 	public void setCustomerCity(String customerCity) {
 		this.customerCity = customerCity;
 	}
+	
+	public String getCustomerState() {
+		return customerState;
+	}
+
+	public void setCustomerState(String customerState) {
+		this.customerState = customerState;
+	}
 
 	public String getCustomerEmail() {
 		return customerEmail;
@@ -111,7 +142,7 @@ public class Customer {
 	@Override
 	public int hashCode() {
 		return Objects.hash(customerAddress, customerCity, customerContact, customerEmail, customerGST, customerId,
-				customerName, customerPassword, customerPincode);
+				customerName, customerPassword, customerPincode, customerState);
 	}
 
 	@Override
@@ -129,18 +160,19 @@ public class Customer {
 				&& Objects.equals(customerEmail, other.customerEmail) && Objects.equals(customerGST, other.customerGST)
 				&& Objects.equals(customerId, other.customerId) && Objects.equals(customerName, other.customerName)
 				&& Objects.equals(customerPassword, other.customerPassword)
-				&& Objects.equals(customerPincode, other.customerPincode);
+				&& Objects.equals(customerPincode, other.customerPincode)
+				&& Objects.equals(customerState, other.customerState);
 	}
 
 	@Override
 	public String toString() {
 		return "Customer [customerId=" + customerId + ", customerName=" + customerName + ", customerGST=" + customerGST
-				+ ", customerAddress=" + customerAddress + ", customerCity=" + customerCity + ", customerEmail="
-				+ customerEmail + ", customerContact=" + customerContact + ", customerPincode=" + customerPincode
-				+ ", customerPassword=" + customerPassword + "]";
+				+ ", customerAddress=" + customerAddress + ", customerCity=" + customerCity + ", customerState="
+				+ customerState + ", customerEmail=" + customerEmail + ", customerContact=" + customerContact
+				+ ", customerPincode=" + customerPincode + ", customerPassword=" + customerPassword + "]";
 	}
 
-	
+		
 	
 	
 }
