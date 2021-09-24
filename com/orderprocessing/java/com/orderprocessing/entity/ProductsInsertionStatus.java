@@ -12,10 +12,10 @@ public class ProductsInsertionStatus {
 		
 	}
 	
-	public ProductsInsertionStatus(int noOfProductsImported, Status status) {
+	public ProductsInsertionStatus(int noOfProductsImported, String status) {
 		super();
 		this.noOfProductsImported = noOfProductsImported;
-		this.status = status;
+		this.status = Status.valueOf(status);
 	}
 
 	public int getNoOfProductsImported() {
@@ -24,11 +24,11 @@ public class ProductsInsertionStatus {
 	public void setNoOfProductsImported(int noOfProductsImported) {
 		this.noOfProductsImported = noOfProductsImported;
 	}
-	public Status getStatus() {
-		return status;
+	public String getStatus() {
+		return status.toString();
 	}
-	public void setStatus(Status status) {
-		this.status = status;
+	public void setStatus(String status) {
+		this.status = Status.valueOf(status);
 	}
 
 	@Override

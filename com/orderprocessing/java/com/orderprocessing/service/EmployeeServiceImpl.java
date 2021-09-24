@@ -1,12 +1,13 @@
 package com.orderprocessing.service;
 
 
+import java.io.IOException;
+import java.nio.file.Paths;
+import java.util.Arrays;
 import java.util.List;
 
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
-
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.orderprocessing.dao.CustomerDao;
 import com.orderprocessing.dao.CustomerDaoImpl;
 import com.orderprocessing.dao.EmployeeDao;
@@ -19,6 +20,7 @@ import com.orderprocessing.entity.Employee;
 import com.orderprocessing.entity.Order;
 import com.orderprocessing.entity.Product;
 import com.orderprocessing.entity.ProductsInsertionStatus;
+import com.orderprocessing.entity.Quote;
 import com.orderprocessing.exception.CustomerNotFoundException;
 import com.orderprocessing.exception.EmployeeNotFoundException;
 import com.orderprocessing.exception.NoOrderFoundException;
@@ -79,22 +81,23 @@ public class EmployeeServiceImpl implements EmployeeService {
 	@Override
 	public ProductsInsertionStatus importProducts(String productJSON) {
 		// TODO Auto-generated method stub
-		
-		JSONParser parser = new JSONParser();
-	    JSONObject obj;
-	    List<Product> products = null;
-    	
-	    try
-	    {
-	    	
-	    	obj = (JSONObject)parser.parse(productJSON);
-	        products = (List<Product>) obj.get("products"); 	    	
-	    } catch(ParseException e) {
-	         e.printStackTrace();
-	      }
-		
-	    return productDao.importProducts(products);
-	    
+
+		ObjectMapper mapper = new ObjectMapper();
+		try {
+			List<Product> productList = Arrays
+					.asList(mapper.readValue(Paths.get(productJSON).toFile(), Product[].class));
+
+//			productList.forEach(System.out::println);
+
+			return productDao.importProducts(productList);
+
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			return new ProductsInsertionStatus(0, "failed");
+		}
+		catch(Exception e) {
+			return new ProductsInsertionStatus(0, "failed");
+		}
 		
 	}
 	
@@ -118,5 +121,19 @@ public class EmployeeServiceImpl implements EmployeeService {
 		return null;
 	}
 	
+	@Override
+	public void insertOrders(String orderJson) {
+		// TODO Auto-generated method stub
+		ObjectMapper mapper = new ObjectMapper();
+		try {
+			mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+			Quote newOrder = mapper.readValue(orderJson, Quote.class);
+			orderDao.insertOrders(newOrder);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	}
 
 }

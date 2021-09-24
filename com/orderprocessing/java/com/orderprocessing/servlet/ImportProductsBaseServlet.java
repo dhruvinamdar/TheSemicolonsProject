@@ -15,10 +15,10 @@ public class ImportProductsBaseServlet extends HttpServlet{
 	private static final long serialVersionUID = 1L;
 
 	public void doPost(HttpServletRequest request,HttpServletResponse response) throws IOException, ServletException {
-		HttpSession session = request.getSession(false);
-		if(session!=null && session.getAttribute("employee")!=null)
-			request.getRequestDispatcher("importProduct.html").forward(request, response);
-		else
-			request.getRequestDispatcher("login.html").forward(request, response);
+//		HttpSession session = request.getSession(false);
+//		if(session!=null && session.getAttribute("employee")!=null)
+		request.getRequestDispatcher("importProduct.html").forward(request, response);
+//		else
+//			request.getRequestDispatcher("login.html").forward(request, response);
 	}
 }

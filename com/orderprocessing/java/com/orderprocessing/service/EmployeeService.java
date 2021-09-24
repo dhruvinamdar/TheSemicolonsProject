@@ -15,4 +15,5 @@ public interface EmployeeService {
 	String getProductData();
 	String getCustomer(String id) throws CustomerNotFoundException;
 	String addQuote(String quote);
+	void insertOrders(String orderJson);
 }

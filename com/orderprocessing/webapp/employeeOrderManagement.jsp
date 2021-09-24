@@ -9,16 +9,20 @@
     <title>Order Management</title>
     <link rel="stylesheet" href="css/style.css">
   </head>
-  <body>
+  <body onload="displayDate()">
     <div class="order-employee">
-      <nav class="navbar navbar-expand-lg navbar-dark bg-primary bs-side-navbar" id="navbar">
+      <nav class="navbar navbar-expand-lg navbar-dark bg-primary bs-side-navbar" id="navbar" >
         <img src="images/logo.jpg" class="navbar-brand logo">
         <button class="navbar-toggler"type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
               <li class="nav-item">
-               <input class="user-info" value="${employee.employeeName}">
-               <p>Last Login </p><input class="user-info" value="${employee.lastLoginDateTime}">
+              <span class="employeeData">
+	               <input class="user-info" value="Welcome">
+	               <input class="user-info" value="${employee.employeeName}">
+              </span>
+              <span class = "employeeData user-info" id="LoginDate">
+              </span>
               </li>
               <li class="nav-item active">
                 <a class="nav-link">Create a New Quote<span class="sr-only">(current)</span></a>
@@ -39,7 +43,7 @@
           <div class="form-group row">
             <label for="oderDate" class="col-sm-2 col-form-label">Order Date</label>
             <div class="col-sm-10">
-              <input type="date" class="form-control" id="orderDate" required>
+              <input type="date" class="form-control datepicker" id="orderDate" required>
             </div>
           </div>
           <div class="form-group row">

@@ -31,8 +31,7 @@ public class StoreQuoteServlet extends HttpServlet {
 //	String quote = request.getParameter("quote");
 //		System.out.println(quote);
 		try {
-			String status = service.addQuote(quote);
-			request.setAttribute("status",status);
+			service.insertOrders(quote);
 			request.getRequestDispatcher("employeeOrderManagement.jsp").forward(request,response);
 		}
 		catch(Exception exp)

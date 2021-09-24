@@ -329,6 +329,8 @@ a:hover, a:focus {
   }
   .navbar {
     width: 18%;
+    height:100vh;
+    position:fixed;
     align-items: flex-start;
   }
   .navbar-brand {
@@ -340,7 +342,7 @@ a:hover, a:focus {
     margin-bottom: 0.7em;
   }
   .employee{
-    margin-left: 8rem;
+    margin-left: 20rem;
     margin-top: 2rem;
     width: 1050px;
   }
@@ -417,4 +419,9 @@ label{
 
 #toHideEmail{
 	display:none;
+}
+
+.employeeData{
+	color:white;
+	display:flex;
 }

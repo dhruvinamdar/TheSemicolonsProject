@@ -1,4 +1,3 @@
-
 // ------------------------------------- AJAX Request to Get CCustomer Details and Product Data ------------------------------------------------------
 function showProductTable(event){
 	event.preventDefault();
@@ -97,6 +96,7 @@ function showData(customerProductData){
 	// creating dynamic table
     var table = document.createElement('table');
     // set the table "id"
+	table.setAttribute('class', 'table table-hover table-striped');
     table.setAttribute('id', 'productTable');
     var arrHead = ['Product ID', 'Product Name', 'Product Category', 'Product Price', 'Quantity'];
 
@@ -105,6 +105,7 @@ function showData(customerProductData){
     for (var h = 0; h < arrHead.length; h++) {
         var th = document.createElement('th');          
         th.innerHTML = arrHead[h];
+		th.setAttribute('scope', 'col');
         tr.appendChild(th);
     }
 
@@ -172,7 +173,8 @@ function createQuote(event){
     for(let i = 0;i<productTable.rows.length-1;i++){
         var quantityIdx = "quantity" + i;
 		var productQuantity = document.getElementById(quantityIdx).value;
-		if(productQuantity.localeCompare('') != 0){
+		var quantityOfProduct = parseInt(productQuantity);
+		if(productQuantity.localeCompare('') != 0 && quantityOfProduct > 1){
     		var product = {
 				 			"productId" : document.getElementById("productTable").rows[i+1].cells.item(0).innerHTML,
 			     			"quantity" : productQuantity
@@ -196,4 +198,16 @@ function createQuote(event){
 	xhr.open("POST","storeQuote", true)
 	xhr.setRequestHeader("content-type","application/json");
 	xhr.send(quote);
+}
+
+// -------------------------------- Display Last Login DateTime ---------------------------------------------------------------
+function displayDate(){
+	var currentdate = new Date();
+	var datetime = "Last Login: " + currentdate.getDate() + "/" + currentdate.getMonth() 
+		+ "/" + currentdate.getFullYear() + " @ " 
+		+ currentdate.getHours() + ":" 
+		+ currentdate.getMinutes() + ":" + currentdate.getSeconds();
+	document.getElementById("loginDate").innerHTML = datetime;
+	console.log(datetime);
+	console.log("abc");
 }
