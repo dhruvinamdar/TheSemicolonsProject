@@ -2,7 +2,6 @@ package com.orderprocessing.servlet;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -14,15 +13,14 @@ import javax.servlet.http.HttpSession;
 
 import com.orderprocessing.service.CustomerService;
 import com.orderprocessing.service.CustomerServiceImpl;
-import com.orderprocessing.utility.Order;
 
 /**
  * Servlet implementation class CustomerViewQuoteServlet
  */
-@WebServlet("/CustomerViewOrdersServlet")
-public class CustomerViewOrdersServlet extends HttpServlet {
+@WebServlet("/CustomerViewQuoteServlet")
+public class CustomerViewQuoteServlet extends HttpServlet {
+	private static final long serialVersionUID = 1L;
 
-	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		PrintWriter out=response.getWriter();
 		HttpSession session=request.getSession();
@@ -30,9 +28,9 @@ public class CustomerViewOrdersServlet extends HttpServlet {
 			response.setContentType("text/html");
 			String customerId = request.getParameter("customerId");
 			CustomerService cservice = new CustomerServiceImpl();
-			String orderList = cservice.displayOrder(customerId);
-			request.setAttribute("orderList", orderList);
-			RequestDispatcher rd=request.getRequestDispatcher("displayOrders.jsp");
+			String quoteList = cservice.displayQuote(customerId);
+			request.setAttribute("quoteList", quoteList);
+			RequestDispatcher rd=request.getRequestDispatcher("displayQuote.jsp");
 			rd.forward(request, response);
 		}
 		else {
