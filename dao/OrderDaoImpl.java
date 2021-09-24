@@ -8,6 +8,8 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.orderprocessing.utility.Customer;
 import com.orderprocessing.utility.Order;
 import com.orderprocessing.utils.DBUtils;
@@ -35,8 +37,9 @@ public class OrderDaoImpl implements OrderDao {
 	 * Method to display quote id, date, shipping cost and total order value for all orders whose status is "Pending".
 	 * Returns an Array List of type Order.
 	 */
-	public List<Order> displayQuoteDetails() {
-		String sql = "select ORDER_ID, ORDER_DATE, TOTAL_ORDER_VALUE, SHIPPING_COST from orders where STATUS='Pending'";
+	public String displayQuoteDetails(String customerId) throws JsonProcessingException {
+		ObjectMapper objectMapper = new ObjectMapper();
+		String sql = "select ORDER_ID, ORDER_DATE, TOTAL_ORDER_VALUE, SHIPPING_COST from orders where CUSTOMER_ID='" + customerId + "' and STATUS='Pending'";
 		try {
 			prepStatement = conn.prepareStatement(sql);
 			List<Order> quoteList = new ArrayList<>();
@@ -49,7 +52,8 @@ public class OrderDaoImpl implements OrderDao {
 				quote.setTotalOrderValue(rs.getFloat("SHIPPING_COST"));					
 				quoteList.add(quote);
 			}
-			return quoteList;
+			String quoteListToString = objectMapper.writeValueAsString(quoteList);
+			return quoteListToString;
 		}
 		catch(SQLException e) {
 			e.printStackTrace();
@@ -61,7 +65,8 @@ public class OrderDaoImpl implements OrderDao {
 	 *  Method to display all details of a particular quote including customer address.
 	 *  Returns an Array List of type Object containing objects of type Order and Customer.
 	 */
-	public List<Object> displayDetailedQuote(String orderId) {
+	public String displayDetailedQuote(String orderId) throws JsonProcessingException {
+		ObjectMapper objectMapper = new ObjectMapper();
 		String sql = "SELECT orders.ORDER_ID, orders.ORDER_DATE, orders.TOTAL_ORDER_VALUE, orders.SHIPPING_COST, orders.SHIPPING_AGENCY, orders.STATUS, customer.CUSTOMER_ADDRESS_LINE1, customer.CUSTOMER_ADDRESS_CITY, customer.CUSTOMER_ADDRESS_STATE from orders INNER JOIN customer ON orders.CUSTOMER_ID = customer.CUSTOMER_ID WHERE ORDER_ID=?";
 		try {
 			prepStatement = conn.prepareStatement(sql);
@@ -70,7 +75,8 @@ public class OrderDaoImpl implements OrderDao {
 			ResultSet rs = prepStatement.executeQuery(sql);
 			quoteList.add(new Order(rs.getString(1), rs.getDate(2), rs.getFloat(3), rs.getFloat(4), rs.getString(5), rs.getString(6)));
 			quoteList.add(new Customer(rs.getString(7), rs.getString(8), rs.getString(9)));
-			return quoteList;
+			String detailedQuoteToString = objectMapper.writeValueAsString(quoteList);
+			return detailedQuoteToString;
 		}
 		catch(SQLException e) {
 			e.printStackTrace();
@@ -123,8 +129,9 @@ public class OrderDaoImpl implements OrderDao {
 	 * Method to display order id, date shipping cost, total order value and status of all orders whose status are "Approved" or "Completed".
 	 * Returns an Array List of type Order.
 	 */
-	public List<Order> displayOrderDetails() {
-		String sql = "select ORDER_ID, ORDER_DATE, SHIPPING_COST, TOTAL_ORDER_VALUE, STATUS from testorder where STATUS='Approved' or STATUS='Completed'";
+	public String displayOrderDetails(String customerId) throws JsonProcessingException {
+		ObjectMapper objectMapper = new ObjectMapper();
+		String sql = "select ORDER_ID, ORDER_DATE, SHIPPING_COST, TOTAL_ORDER_VALUE, STATUS from testorder where STATUS='Approved' or STATUS='Completed' and CUSTOMER_ID='" + customerId + "'";
 		try {
 			prepStatement = conn.prepareStatement(sql);
 			List<Order> orderList = new ArrayList<>();
@@ -138,7 +145,8 @@ public class OrderDaoImpl implements OrderDao {
 				order.setStatus(rs.getString(5));					
 				orderList.add(order);
 			}
-			return orderList;
+			String orderToString = objectMapper.writeValueAsString(orderList);
+			return orderToString;
 		}
 		catch(SQLException e) {
 			e.printStackTrace();

@@ -2,6 +2,7 @@ package com.orderprocessing.dao;
 
 import java.util.List;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.orderprocessing.utility.Order;
 
 /*
@@ -10,12 +11,12 @@ import com.orderprocessing.utility.Order;
  */
 public interface OrderDao {
 	
-	public List<Order> displayQuoteDetails();
+	public String displayQuoteDetails(String customerId) throws JsonProcessingException;
 	
-	public List<Object> displayDetailedQuote(String orderId);
+	public String displayDetailedQuote(String orderId) throws JsonProcessingException;
 	
 	public void setQuoteStatus(String orderId);
 	
-	public List<Order> displayOrderDetails();
+	public String displayOrderDetails(String customerId) throws JsonProcessingException;
 	
 }
