@@ -1,77 +1,86 @@
 package com.orderprocessing.dao;
+
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.orderprocessing.entity.Product;
 import com.orderprocessing.entity.ProductsInsertionStatus;
 import com.orderprocessing.utils.DBUtil;
 
-public class ProductDaoImpl implements ProductDao{
-    
-	 private  Connection conn;
-	 private PreparedStatement ps;
-	 private final static String INSERT_PRODUCT = "Insert into product values (?,?,?,?)";
-		
-	 public ProductDaoImpl() {
-		 conn = DBUtil.getMyConnection();
-	 }
-	 
+public class ProductDaoImpl implements ProductDao {
+
+	private Connection conn;
+
+	private PreparedStatement ps;
+	private final static String INSERT_PRODUCT = "Insert into product values (?,?,?,?)";
+	private final static String GET_ALL_PRODUCTS = "Select * from product";
+
+	ResultSet rs;
+	PreparedStatement stmt;
+	private Connection connection;
+
+	public ProductDaoImpl() {
+		conn = DBUtil.getMyConnection();
+	}
+
 	@Override
 	public void addProduct(Product product) {
-		// TODO Auto-generated method stub
-		
-	}
 
+	}
 
 	@Override
-	public Product getProductByID(int product_id) {
-		// TODO Auto-generated method stub
-		return null;
+	public String getAllProduct() {
+
+		ObjectMapper objectMapper = new ObjectMapper();
+		// Set pretty printing of json
+
+		stmt = null;
+		rs = null;
+		String productArrayToJson = null;
+		List<Product> productList = new ArrayList<Product>();
+		try {
+			stmt = conn.prepareStatement(GET_ALL_PRODUCTS);
+			rs = stmt.executeQuery();
+			while (rs.next()) {
+				Product product = new Product();
+
+				product.setProductId(rs.getString("PRODUCT_ID"));
+				product.setPrice(rs.getFloat("PRODUCT_PRICE"));
+				product.setProductName(rs.getString("PRODUCT_NAME"));
+				product.setCategory(rs.getString("PRODUCT_CATEGORY"));
+				productList.add(product);
+			}
+
+			productArrayToJson = objectMapper.writeValueAsString(productList);
+
+			// To convert back to Array
+			// Product [] jsonToProductArray =
+			// objectMapper.readValue(arrayToJson,Person[].class);
+			return productArrayToJson;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (JsonProcessingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return "";
 	}
-
-
-	@Override
-	public List<Product> getAllProduct() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-
-	@Override
-	public void updatePRODUCT(Product product) {
-		// TODO Auto-generated method stub
-		
-	}
-
-
-	@Override
-	public void deleteProduct(int product_id) {
-		// TODO Auto-generated method stub
-		
-	}
-
 
 	@Override
 	public ProductsInsertionStatus importProducts(List<Product> productList) {
 		// TODO Auto-generated method stub
-		
-		
+
 		return null;
-		
-		
-		
-		
+
 	}
-	 
-	 
-	  
-	     
-	
+
 //	@Override
 //	public void addProduct(Product product) {
 //		final String SQL= "insert into product values(?,?,?,?)";
@@ -200,6 +209,4 @@ public class ProductDaoImpl implements ProductDao{
 //		}
 //	}
 
-	
-		
-	}
+}

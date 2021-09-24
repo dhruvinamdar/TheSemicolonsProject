@@ -1,5 +1,6 @@
 package com.orderprocessing.entity;
 
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.Objects;
@@ -9,7 +10,7 @@ public class Employee {
 	private String employeeId;
 	private String employeeName;
 	private String employeePassword;
-	private LocalDateTime lastLoginDateTime;
+	private Timestamp lastLoginDateTime;
 	public String getEmployeeId() {
 		return employeeId;
 	}
@@ -28,11 +29,11 @@ public class Employee {
 	public void setEmployeePassword(String employeePassword) {
 		this.employeePassword = employeePassword;
 	}
-	public LocalDateTime getLastLoginDateTime() {
+	public Timestamp getLastLoginDateTime() {
 		return lastLoginDateTime;
 	}
-	public void setLastLoginDateTime(LocalDateTime lastLoginDateTime) {
-		this.lastLoginDateTime = lastLoginDateTime;
+	public void setLastLoginDateTime(java.sql.Timestamp timestamp) {
+		this.lastLoginDateTime = timestamp;
 	}
 	@Override
 	public int hashCode() {

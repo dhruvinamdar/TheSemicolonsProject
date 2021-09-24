@@ -3,41 +3,26 @@ package com.orderprocessing.entity;
 import java.util.Objects;
 
 public class Customer {
-	private int customerId;
+	private String customerId;
 	private String customerName;
-	private float customerGST;
+	private String customerGST;
 	private String customerAddress;
 	private String customerCity;
+	private String customerState;
 	private String customerEmail;
-	private int customerContact;
-	private int customerPincode;
+	private String customerContact;
+	private String customerPincode;
 
 	// default constructor
 	public Customer() {
 		super();
 	}
 
-	// parameterized constructor
-	public Customer(int customerId, String customerName, float customerGST, String customerAddress, String customerCity,
-			String customerEmail, int customerContact, int customerPincode) {
-		super();
-
-		this.customerId = customerId;
-		this.customerName = customerName;
-		this.customerGST = customerGST;
-		this.customerAddress = customerAddress;
-		this.customerCity = customerCity;
-		this.customerEmail = customerEmail;
-		this.customerContact = customerContact;
-		this.customerPincode = customerPincode;
-	}
-
-	// getter-setter methods
-	public int getCustomerId() {
+	public String getCustomerId() {
 		return customerId;
 	}
 
-	public void setCustomerId(int customerId) {
+	public void setCustomerId(String customerId) {
 		this.customerId = customerId;
 	}
 
@@ -49,11 +34,11 @@ public class Customer {
 		this.customerName = customerName;
 	}
 
-	public float getCustomerGST() {
+	public String getCustomerGST() {
 		return customerGST;
 	}
 
-	public void setCustomerGST(float customerGST) {
+	public void setCustomerGST(String customerGST) {
 		this.customerGST = customerGST;
 	}
 
@@ -73,6 +58,14 @@ public class Customer {
 		this.customerCity = customerCity;
 	}
 
+	public String getCustomerState() {
+		return customerState;
+	}
+
+	public void setCustomerState(String customerState) {
+		this.customerState = customerState;
+	}
+
 	public String getCustomerEmail() {
 		return customerEmail;
 	}
@@ -81,26 +74,26 @@ public class Customer {
 		this.customerEmail = customerEmail;
 	}
 
-	public int getCustomerContact() {
+	public String getCustomerContact() {
 		return customerContact;
 	}
 
-	public void setCustomerContact(int customerContact) {
+	public void setCustomerContact(String customerContact) {
 		this.customerContact = customerContact;
 	}
 
-	public int getCustomerPincode() {
+	public String getCustomerPincode() {
 		return customerPincode;
 	}
 
-	public void setCustomerPincode(int customerPincode) {
+	public void setCustomerPincode(String customerPincode) {
 		this.customerPincode = customerPincode;
 	}
 
 	@Override
 	public int hashCode() {
 		return Objects.hash(customerAddress, customerCity, customerContact, customerEmail, customerGST, customerId,
-				customerName, customerPincode);
+				customerName, customerPincode, customerState);
 	}
 
 	@Override
@@ -113,18 +106,20 @@ public class Customer {
 			return false;
 		Customer other = (Customer) obj;
 		return Objects.equals(customerAddress, other.customerAddress)
-				&& Objects.equals(customerCity, other.customerCity) && customerContact == other.customerContact
-				&& Objects.equals(customerEmail, other.customerEmail)
-				&& Float.floatToIntBits(customerGST) == Float.floatToIntBits(other.customerGST)
-				&& customerId == other.customerId && Objects.equals(customerName, other.customerName)
-				&& customerPincode == other.customerPincode;
+				&& Objects.equals(customerCity, other.customerCity)
+				&& Objects.equals(customerContact, other.customerContact)
+				&& Objects.equals(customerEmail, other.customerEmail) && Objects.equals(customerGST, other.customerGST)
+				&& Objects.equals(customerId, other.customerId) && Objects.equals(customerName, other.customerName)
+				&& Objects.equals(customerPincode, other.customerPincode)
+				&& Objects.equals(customerState, other.customerState);
 	}
 
 	@Override
 	public String toString() {
 		return "Customer [customerId=" + customerId + ", customerName=" + customerName + ", customerGST=" + customerGST
-				+ ", customerAddress=" + customerAddress + ", customerCity=" + customerCity + ", customerEmail="
-				+ customerEmail + ", customerContact=" + customerContact + ", customerPincode=" + customerPincode + "]";
+				+ ", customerAddress=" + customerAddress + ", customerCity=" + customerCity + ", customerState="
+				+ customerState + ", customerEmail=" + customerEmail + ", customerContact=" + customerContact
+				+ ", customerPincode=" + customerPincode + "]";
 	}
 
 }

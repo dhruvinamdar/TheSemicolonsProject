@@ -27,7 +27,7 @@ import com.orderprocessing.utils.DBUtil;
 
 public class EmployeeDaoImpl implements EmployeeDao {
 
-	private static final String FIND_EMPLOYEE_BY_ID = "SELECT * FROM employee WHERE id=? and password=?";
+	private static final String FIND_EMPLOYEE_BY_ID = "SELECT * FROM employee WHERE EMPLOYEE_ID=? and EMPLOYEE_PASSWORD=?";
 
 	ResultSet resultSet;
 	PreparedStatement stmt;
@@ -48,16 +48,13 @@ public class EmployeeDaoImpl implements EmployeeDao {
 			stmt.setString(2, password);
 			resultSet = stmt.executeQuery();
 			if (resultSet.next()) {
-//				employee.setId(resultSet.getInt(1));
-//				System.out.println();
-//				System.out.println(resultSet.getString(2));
-
+//				
 				employee.setEmployeeId(resultSet.getString(1));
 				employee.setEmployeeName(resultSet.getString(2));
 				employee.setEmployeePassword("");
-
+				
 				// Have to set it employee.setLastLoginDateTime(());
-
+				employee.setLastLoginDateTime(resultSet.getTimestamp(4));
 				return employee;
 
 			}
@@ -73,7 +70,7 @@ public class EmployeeDaoImpl implements EmployeeDao {
 				ex.printStackTrace();
 			}
 		}
-		return employee;
+		throw new EmployeeNotFoundException();
 	}
 
 }

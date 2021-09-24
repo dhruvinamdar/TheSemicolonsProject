@@ -1,13 +1,14 @@
 package com.orderprocessing.service;
 
 
-import java.sql.PreparedStatement;
 import java.util.List;
 
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
+import com.orderprocessing.dao.CustomerDao;
+import com.orderprocessing.dao.CustomerDaoImpl;
 import com.orderprocessing.dao.EmployeeDao;
 import com.orderprocessing.dao.EmployeeDaoImpl;
 import com.orderprocessing.dao.OrderDao;
@@ -18,6 +19,7 @@ import com.orderprocessing.entity.Employee;
 import com.orderprocessing.entity.Order;
 import com.orderprocessing.entity.Product;
 import com.orderprocessing.entity.ProductsInsertionStatus;
+import com.orderprocessing.exception.CustomerNotFoundException;
 import com.orderprocessing.exception.EmployeeNotFoundException;
 import com.orderprocessing.exception.NoOrderFoundException;
 
@@ -26,7 +28,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 	private EmployeeDao employeeDao;
 	private OrderDao orderDao;
 	private ProductDao productDao;
-	
+	private CustomerDao customerDao;
 	
 	
 	public EmployeeServiceImpl() {
@@ -34,7 +36,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 	 employeeDao = new EmployeeDaoImpl();
 	 orderDao = new OrderDaoImpl();
 	 productDao = new ProductDaoImpl();
-	 
+	 customerDao = new CustomerDaoImpl();
 	 
 	}
 	
@@ -96,8 +98,25 @@ public class EmployeeServiceImpl implements EmployeeService {
 		
 	}
 	
-	
-	
+	@Override
+	public String getProductData() {
+		// TODO Auto-generated method stub
+
+		return productDao.getAllProduct();
+	}
+
+	@Override
+	public String getCustomer(String id) throws CustomerNotFoundException {
+		// TODO Auto-generated method stub
+		System.out.println(id + "In service customer");
+		return customerDao.getCustomer(id);
+	}
+
+	@Override
+	public String addQuote(String quote) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 
 }

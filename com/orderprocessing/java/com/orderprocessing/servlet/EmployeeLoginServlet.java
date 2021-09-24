@@ -1,12 +1,16 @@
 package com.orderprocessing.servlet;
 
 import java.io.IOException;
+import java.util.Enumeration;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.orderprocessing.entity.Employee;
 import com.orderprocessing.service.EmployeeService;
@@ -24,12 +28,20 @@ public class EmployeeLoginServlet extends HttpServlet{
 		EmployeeService service = new EmployeeServiceImpl();
 		String username = request.getParameter("username");
 		String password = request.getParameter("password");
+
 		try {
 			Employee employee = service.login(username,password);
+			System.out.println("Last login" + employee.getLastLoginDateTime());
 			if(employee!=null)
 			{
+//				HttpSession session = request.getSession(false);
+//				if(session==null)
+//				{
+//					session = request.getSession();
+//					session.setAttribute("employee", employee);
+//				}
 				request.setAttribute("employee",employee);
-				request.getRequestDispatcher("employeeOrderManagement.html").forward(request, response);
+				request.getRequestDispatcher("employeeOrderManagement.jsp").forward(request, response);
 			}
 			else
 			{
@@ -39,7 +51,12 @@ public class EmployeeLoginServlet extends HttpServlet{
 		catch(Exception exception) {
 			//exception.printStackTrace();
 			request.setAttribute("",exception.getMessage());
-			request.getRequestDispatcher("").forward(request, response);
+			request.getRequestDispatcher("login.html").forward(request, response);
 		}
 	}
+//	
+//	@Override
+//	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+//		doGet(req, resp);
+//	}
 }
