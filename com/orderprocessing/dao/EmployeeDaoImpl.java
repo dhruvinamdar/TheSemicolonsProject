@@ -27,7 +27,7 @@ import com.orderprocessing.util.DBUtil;
 
 public class EmployeeDaoImpl implements EmployeeDao {
 
-	private static final String FIND_EMPLOYEE_BY_ID = "SELECT * FROM employee WHERE id=? and password=?";
+	private static final String FIND_EMPLOYEE_BY_ID = "SELECT * FROM employee WHERE EMPLOYEE_ID=? and EMPLOYEE_PASSWORD=?";
 
 	ResultSet resultSet;
 	PreparedStatement stmt;
@@ -53,8 +53,6 @@ public class EmployeeDaoImpl implements EmployeeDao {
 				employee.setEmployeeName(resultSet.getString(2));
 				employee.setEmployeePassword("");
 				employee.setLastLoginDateTime(resultSet.getTimestamp(4));
-
-				// Have to set it employee.setLastLoginDateTime(());
 
 				return employee;
 

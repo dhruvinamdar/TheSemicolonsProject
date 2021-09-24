@@ -1,11 +1,14 @@
 package com.orderprocessing.service;
 
+import java.io.IOException;
+import java.nio.file.Paths;
+import java.util.Arrays;
 import java.util.List;
 
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
-
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.orderprocessing.dao.CustomerDao;
+import com.orderprocessing.dao.CustomerDaoImpl;
 import com.orderprocessing.dao.EmployeeDao;
 import com.orderprocessing.dao.EmployeeDaoImpl;
 import com.orderprocessing.dao.OrderDao;
@@ -16,6 +19,8 @@ import com.orderprocessing.entity.Employee;
 import com.orderprocessing.entity.Order;
 import com.orderprocessing.entity.Product;
 import com.orderprocessing.entity.ProductsInsertionStatus;
+import com.orderprocessing.entity.Quote;
+import com.orderprocessing.exception.CustomerNotFoundException;
 import com.orderprocessing.exception.EmployeeNotFoundException;
 import com.orderprocessing.exception.NoOrderFoundException;
 
@@ -24,13 +29,14 @@ public class EmployeeServiceImpl implements EmployeeService {
 	private EmployeeDao employeeDao;
 	private OrderDao orderDao;
 	private ProductDao productDao;
+	private CustomerDao customerDao;
 
 	public EmployeeServiceImpl() {
 
 		employeeDao = new EmployeeDaoImpl();
 		orderDao = new OrderDaoImpl();
 		productDao = new ProductDaoImpl();
-
+		customerDao = new CustomerDaoImpl();
 	}
 
 	@Override
@@ -70,19 +76,48 @@ public class EmployeeServiceImpl implements EmployeeService {
 	public ProductsInsertionStatus importProducts(String productJSON) {
 		// TODO Auto-generated method stub
 
-		JSONParser parser = new JSONParser();
-		JSONObject obj;
-		List<Product> products = null;
-
+		ObjectMapper mapper = new ObjectMapper();
 		try {
+			List<Product> productList = Arrays
+					.asList(mapper.readValue(Paths.get(productJSON).toFile(), Product[].class));
 
-			obj = (JSONObject) parser.parse(productJSON);
-			products = (List<Product>) obj.get("products");
-		} catch (ParseException e) {
+//			productList.forEach(System.out::println);
+
+			return productDao.importProducts(productList);
+
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		return null;
 
-		return productDao.importProducts(products);
+	}
+
+	@Override
+	public String getProductData() {
+		// TODO Auto-generated method stub
+
+		return productDao.getAllProduct();
+	}
+
+	public String getCustomer(String id) throws CustomerNotFoundException {
+
+		return customerDao.getCustomer(id);
+
+	}
+
+	@Override
+	public void insertOrders(String orderJson) {
+		// TODO Auto-generated method stub
+		ObjectMapper mapper = new ObjectMapper();
+		try {
+			mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+			Quote newOrder = mapper.readValue(orderJson, Quote.class);
+			orderDao.insertOrders(newOrder);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 	}
 

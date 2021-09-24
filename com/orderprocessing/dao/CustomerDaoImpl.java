@@ -146,14 +146,14 @@ public class CustomerDaoImpl implements CustomerDao {
 				customer.setCustomerName(rs.getString("CUSTOMER_NAME"));
 				customer.setCustomerGST(rs.getString("CUSTOMER_GST"));
 				customer.setCustomerAddress(rs.getString("CUSTOMER_ADDRESS_LINE1"));
-				customer.setCustomerAddress(rs.getString("CUSTOMER_ADDRESS_CITY"));
-				customer.setCustomerAddress(rs.getString("CUSTOMER_ADDRESS_STATE"));
-				customer.setCustomerAddress(rs.getString("CUSTOMER_EMAIL"));
-				customer.setCustomerAddress(rs.getString("CUSTOMER_CONTACT"));
-				customer.setCustomerAddress(rs.getString("CUSTOMER_PINCODE"));
+				customer.setCustomerCity(rs.getString("CUSTOMER_ADDRESS_CITY"));
+				customer.setCustomerState(rs.getString("CUSTOMER_ADDRESS_STATE"));
+				customer.setCustomerEmail(rs.getString("CUSTOMER_EMAIL"));
+				customer.setCustomerContact(rs.getString("CUSTOMER_CONTACT"));
+				customer.setCustomerPincode(rs.getString("CUSTOMER_PINCODE"));
 
-				// Have to set it employee.setLastLoginDateTime(());
 				customerToJson = objectMapper.writeValueAsString(customer);
+				System.out.println(customerToJson);
 				return customerToJson;
 			} else
 				return new String("");

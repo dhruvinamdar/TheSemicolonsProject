@@ -7,9 +7,6 @@ import com.orderprocessing.entity.ProductsInsertionStatus;
 
 public interface ProductDao {
 
-	void addProduct(Product product);
-
-	// Product getProductByID(int product_id);
 	String getAllProduct();
 
 	ProductsInsertionStatus importProducts(List<Product> productList);

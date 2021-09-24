@@ -3,9 +3,9 @@ package com.orderprocessing.entity;
 import java.util.Objects;
 
 public class Product {
-	private int productId;
-	private int price;
+	private String productId;
 	private String productName;
+	private float price;
 	private String category;
 
 	public Product() {
@@ -13,7 +13,7 @@ public class Product {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Product(int productId, int price, String productName, String category) {
+	public Product(String productId, float price, String productName, String category) {
 		super();
 		this.productId = productId;
 		this.price = price;
@@ -21,19 +21,19 @@ public class Product {
 		this.category = category;
 	}
 
-	public int getProductId() {
+	public String getProductId() {
 		return productId;
 	}
 
-	public void setProductId(int productId) {
+	public void setProductId(String productId) {
 		this.productId = productId;
 	}
 
-	public int getPrice() {
+	public float getPrice() {
 		return price;
 	}
 
-	public void setPrice(int price) {
+	public void setPrice(float price) {
 		this.price = price;
 	}
 

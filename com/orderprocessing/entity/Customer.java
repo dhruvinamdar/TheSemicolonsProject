@@ -8,31 +8,16 @@ public class Customer {
 	private String customerGST;
 	private String customerAddress;
 	private String customerCity;
+	private String customerState;
 	private String customerEmail;
-	private int customerContact;
-	private int customerPincode;
+	private String customerContact;
+	private String customerPincode;
 
 	// default constructor
 	public Customer() {
 		super();
 	}
 
-	// parameterized constructor
-	public Customer(String customerId, String customerName, String customerGST, String customerAddress,
-			String customerCity, String customerEmail, int customerContact, int customerPincode) {
-		super();
-
-		this.customerId = customerId;
-		this.customerName = customerName;
-		this.customerGST = customerGST;
-		this.customerAddress = customerAddress;
-		this.customerCity = customerCity;
-		this.customerEmail = customerEmail;
-		this.customerContact = customerContact;
-		this.customerPincode = customerPincode;
-	}
-
-	// getter-setter methods
 	public String getCustomerId() {
 		return customerId;
 	}
@@ -73,6 +58,14 @@ public class Customer {
 		this.customerCity = customerCity;
 	}
 
+	public String getCustomerState() {
+		return customerState;
+	}
+
+	public void setCustomerState(String customerState) {
+		this.customerState = customerState;
+	}
+
 	public String getCustomerEmail() {
 		return customerEmail;
 	}
@@ -81,26 +74,26 @@ public class Customer {
 		this.customerEmail = customerEmail;
 	}
 
-	public int getCustomerContact() {
+	public String getCustomerContact() {
 		return customerContact;
 	}
 
-	public void setCustomerContact(int customerContact) {
+	public void setCustomerContact(String customerContact) {
 		this.customerContact = customerContact;
 	}
 
-	public int getCustomerPincode() {
+	public String getCustomerPincode() {
 		return customerPincode;
 	}
 
-	public void setCustomerPincode(int customerPincode) {
+	public void setCustomerPincode(String customerPincode) {
 		this.customerPincode = customerPincode;
 	}
 
 	@Override
 	public int hashCode() {
 		return Objects.hash(customerAddress, customerCity, customerContact, customerEmail, customerGST, customerId,
-				customerName, customerPincode);
+				customerName, customerPincode, customerState);
 	}
 
 	@Override
@@ -113,17 +106,20 @@ public class Customer {
 			return false;
 		Customer other = (Customer) obj;
 		return Objects.equals(customerAddress, other.customerAddress)
-				&& Objects.equals(customerCity, other.customerCity) && customerContact == other.customerContact
+				&& Objects.equals(customerCity, other.customerCity)
+				&& Objects.equals(customerContact, other.customerContact)
 				&& Objects.equals(customerEmail, other.customerEmail) && Objects.equals(customerGST, other.customerGST)
 				&& Objects.equals(customerId, other.customerId) && Objects.equals(customerName, other.customerName)
-				&& customerPincode == other.customerPincode;
+				&& Objects.equals(customerPincode, other.customerPincode)
+				&& Objects.equals(customerState, other.customerState);
 	}
 
 	@Override
 	public String toString() {
 		return "Customer [customerId=" + customerId + ", customerName=" + customerName + ", customerGST=" + customerGST
-				+ ", customerAddress=" + customerAddress + ", customerCity=" + customerCity + ", customerEmail="
-				+ customerEmail + ", customerContact=" + customerContact + ", customerPincode=" + customerPincode + "]";
+				+ ", customerAddress=" + customerAddress + ", customerCity=" + customerCity + ", customerState="
+				+ customerState + ", customerEmail=" + customerEmail + ", customerContact=" + customerContact
+				+ ", customerPincode=" + customerPincode + "]";
 	}
 
 }

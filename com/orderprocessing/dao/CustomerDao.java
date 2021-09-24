@@ -18,6 +18,5 @@ public interface CustomerDao {
 	public void displayOrderInvoice();
 
 	public String getCustomer(String idOrName) throws CustomerNotFoundException; // ID or Name parameter to be fetched
-																					// from user
-
+																					// // from user
 }

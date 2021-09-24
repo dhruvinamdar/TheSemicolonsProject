@@ -5,6 +5,7 @@ import java.util.List;
 import com.orderprocessing.entity.Employee;
 import com.orderprocessing.entity.Order;
 import com.orderprocessing.entity.ProductsInsertionStatus;
+import com.orderprocessing.exception.CustomerNotFoundException;
 
 public interface EmployeeService {
 
@@ -14,4 +15,9 @@ public interface EmployeeService {
 
 	ProductsInsertionStatus importProducts(String productJSON);
 
+	String getProductData();
+
+	String getCustomer(String id) throws CustomerNotFoundException;
+
+	void insertOrders(String orderJson);
 }
