@@ -5,6 +5,7 @@ import java.util.List;
 import com.orderprocessing.utility.Customer;
 import com.orderprocessing.utility.Order;
 import com.orderprocessing.utility.Invoice;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.orderprocessing.dao.CustomerDao;
 import com.orderprocessing.dao.CustomerDaoImpl;
 import com.orderprocessing.dao.InvoiceDao;
@@ -61,16 +62,28 @@ public class CustomerServiceImpl implements CustomerService {
 	 * Method to use OrderDaoImpl object and call display quote method in OrderDaoImpl and 
 	 * return Array List of type Order. 
 	 */
-	public List<Order> displayQuote() {
-		return orderDao.displayQuoteDetails();
+	public String displayQuote(String customerId) {
+		try {
+			return orderDao.displayQuoteDetails(customerId);
+		} catch (JsonProcessingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
 	}
 	
 	/*
 	 * Method to use OrderDaoImpl object and pass specific order id to display detailed quote method in OrderDaoImpl and 
 	 * return Array List of type Object containing objects of type Order and Customer. 
 	 */
-	public List<Object> displayAllQuoteDetails(String orderId) {
-		return orderDao.displayDetailedQuote(orderId);
+	public String displayAllQuoteDetails(String orderId) {
+		try {
+			return orderDao.displayDetailedQuote(orderId);
+		} catch (JsonProcessingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
 	}
 	
 	/*
@@ -84,8 +97,14 @@ public class CustomerServiceImpl implements CustomerService {
 	 * Method to use OrderDaoImpl object and call display order method in OrderDaoImpl and 
 	 * return Array List of type Order. 
 	 */
-	public List<Order> displayOrder() {
-		return orderDao.displayOrderDetails();
+	public String displayOrder(String customerId) {
+		try {
+			return orderDao.displayOrderDetails(customerId);
+		} catch (JsonProcessingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
 	}
 	
 	/*

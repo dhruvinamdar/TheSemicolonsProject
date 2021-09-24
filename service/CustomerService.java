@@ -17,13 +17,13 @@ public interface CustomerService {
 	
 	public String getCustomer(String customerIdOrName);
 	
-	public List<Order> displayQuote();
+	public String displayQuote(String customerId);
 	
-	public List<Object> displayAllQuoteDetails(String orderId);
+	public String displayAllQuoteDetails(String orderId);
 
 	public void changeQuoteStatus(String orderId);
 	
-	public List<Order> displayOrder();
+	public String displayOrder(String customerId);
 	
 	public List<Object> showInvoice(String orderId);
 
