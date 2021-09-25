@@ -15,7 +15,7 @@ This Readme talks about the project developed by team "Semicolons" for the proje
 ### Stack ###
 * __Frontend__: `HTML`, `CSS`, `Bootstrap`, `JavaScript`, `AJAX`, `JSP`
 * __Backend__: `Servlets`,`Java`, `MySQL`
-* __Jar Files:
+* __Jar Files__:
   * JDBC Connector: `mysql-connector-java-8.0.25.jar`
   * JSON Functionality:  
 * __Server__: `Apache Tomcat v9.0`
