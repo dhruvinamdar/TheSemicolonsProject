@@ -21,6 +21,11 @@ public class Product {
 		this.category = category;
 	}
 
+	public Product(String productName, float price) {
+		this.productName = productName;
+		this.price = price;
+	}
+
 	public String getProductId() {
 		return this.productId;
 	}

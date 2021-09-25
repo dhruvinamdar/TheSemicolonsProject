@@ -1,9 +1,8 @@
 package com.orderprocessing.service;
 
-import java.util.List;
-
 import com.orderprocessing.entity.Customer;
-import com.orderprocessing.entity.Order;
+import com.orderprocessing.entity.DetailedQuote;
+import com.orderprocessing.entity.Invoice;
 
 /*
  *  Customer Service interface
@@ -16,14 +15,14 @@ public interface CustomerService {
 
 	public String getCustomer(String customerIdOrName);
 
-	public List<Order> displayQuote();
+	public String displayQuote(String customerId);
 
-	public List<Object> displayAllQuoteDetails(String orderId);
+	public DetailedQuote displayAllQuoteDetails(String orderId);
 
 	public void changeQuoteStatus(String orderId);
 
-	public List<Order> displayOrder();
+	public String displayOrder(String customerId);
 
-	public List<Object> showInvoice(String orderId);
+	public Invoice showInvoice(String orderId);
 
 }

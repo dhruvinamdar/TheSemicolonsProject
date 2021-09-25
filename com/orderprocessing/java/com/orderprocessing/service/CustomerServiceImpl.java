@@ -1,7 +1,6 @@
 package com.orderprocessing.service;
 
-import java.util.List;
-
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.orderprocessing.dao.CustomerDao;
 import com.orderprocessing.dao.CustomerDaoImpl;
 import com.orderprocessing.dao.InvoiceDao;
@@ -9,7 +8,8 @@ import com.orderprocessing.dao.InvoiceDaoImpl;
 import com.orderprocessing.dao.OrderDao;
 import com.orderprocessing.dao.OrderDaoImpl;
 import com.orderprocessing.entity.Customer;
-import com.orderprocessing.entity.Order;
+import com.orderprocessing.entity.DetailedQuote;
+import com.orderprocessing.entity.Invoice;
 import com.orderprocessing.exception.CustomerNotFoundException;
 
 /* 
@@ -36,12 +36,12 @@ public class CustomerServiceImpl implements CustomerService {
 	public Customer validateCustomer(String customerLogin, String customerPassword) {
 		try {
 			Customer customer = cdao.checkCredentials(customerLogin, customerPassword);
+			System.out.println("In service of customer");
 			return customer;
 		} catch (CustomerNotFoundException e) {
 			e.printStackTrace();
 		}
 		return null;
-
 	}
 
 	/*
@@ -56,12 +56,38 @@ public class CustomerServiceImpl implements CustomerService {
 		return null;
 	}
 
-	/*
-	 * Method to use OrderDaoImpl object and call display quote method in
-	 * OrderDaoImpl and return Array List of type Order.
-	 */
-	public List<Order> displayQuote() {
-		return orderDao.displayQuoteDetails();
+	@Override
+	public String displayQuote(String customerId) {
+		try {
+			return orderDao.displayQuoteDetails(customerId);
+		} catch (JsonProcessingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	@Override
+	public void changeQuoteStatus(String orderId) {
+		System.out.println("In customer Service" + orderId);
+		orderDao.setQuoteStatus(orderId);
+
+	}
+
+	@Override
+	public String displayOrder(String customerId) {
+		try {
+			return orderDao.displayOrderDetails(customerId);
+		} catch (JsonProcessingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	@Override
+	public Invoice showInvoice(String orderId) {
+		return invoiceDao.displayOrderInvoice(orderId);
 	}
 
 	/*
@@ -69,33 +95,16 @@ public class CustomerServiceImpl implements CustomerService {
 	 * detailed quote method in OrderDaoImpl and return Array List of type Object
 	 * containing objects of type Order and Customer.
 	 */
-	public List<Object> displayAllQuoteDetails(String orderId) {
-		return orderDao.displayDetailedQuote(orderId);
-	}
-
-	/*
-	 * Method to use OrderDaoImpl object and pass specific order id to change status
-	 * of that order from "Pending" to "Approved".
-	 */
-	public void changeQuoteStatus(String orderId) {
-		orderDao.setQuoteStatus(orderId);
-	}
-
-	/*
-	 * Method to use OrderDaoImpl object and call display order method in
-	 * OrderDaoImpl and return Array List of type Order.
-	 */
-	public List<Order> displayOrder() {
-		return orderDao.displayOrderDetails();
-	}
-
-	/*
-	 * Method to use InvoiceDaoImpl object and call display order method in
-	 * OrderDaoImpl and return Array List of type Object containing objects of type
-	 * Order, Product, OrderLine, Customer, Invoice.
-	 */
-	public List<Object> showInvoice(String orderId) {
-		return invoiceDao.displayOrderInvoice(orderId);
+	@Override
+	public DetailedQuote displayAllQuoteDetails(String orderId) {
+		System.out.println("In service : display All quote");
+		try {
+			return orderDao.displayDetailedQuote(orderId);
+		} catch (JsonProcessingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 }

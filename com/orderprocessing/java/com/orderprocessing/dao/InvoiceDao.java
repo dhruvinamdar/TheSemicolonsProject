@@ -1,6 +1,6 @@
 package com.orderprocessing.dao;
 
-import java.util.List;
+import com.orderprocessing.entity.Invoice;
 
 /*
  *  Invoice Dao Interface
@@ -8,5 +8,5 @@ import java.util.List;
  */
 public interface InvoiceDao {
 
-	public List<Object> displayOrderInvoice(String orderId);
+	public Invoice displayOrderInvoice(String orderId);
 }

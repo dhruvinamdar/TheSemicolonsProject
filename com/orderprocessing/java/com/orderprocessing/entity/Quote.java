@@ -11,6 +11,20 @@ public class Quote {
 	private String orderValue;
 	List<ProductTable> products;
 
+	public Quote() {
+
+	}
+
+	public Quote(String orderDate, String customerId, String shippingCost, String orderValue,
+			List<ProductTable> products) {
+		super();
+		this.orderDate = orderDate;
+		this.customerId = customerId;
+		this.shippingCost = shippingCost;
+		this.orderValue = orderValue;
+		this.products = products;
+	}
+
 	// private Map<String, String> products; // Map
 	public String getOrderDate() {
 		return orderDate;

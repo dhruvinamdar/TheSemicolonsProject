@@ -2,6 +2,8 @@ package com.orderprocessing.dao;
 
 import java.util.List;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.orderprocessing.entity.DetailedQuote;
 import com.orderprocessing.entity.Order;
 import com.orderprocessing.entity.Quote;
 import com.orderprocessing.exception.NoOrderFoundException;
@@ -14,11 +16,11 @@ public interface OrderDao {
 
 	void insertOrderLine(Quote newOrder, String lastOrderId);
 
-	public List<Order> displayQuoteDetails();
+	public String displayQuoteDetails(String customerId) throws JsonProcessingException;
 
-	public List<Object> displayDetailedQuote(String orderId);
+	public DetailedQuote displayDetailedQuote(String orderId) throws JsonProcessingException;
 
 	public void setQuoteStatus(String orderId);
 
-	public List<Order> displayOrderDetails();
+	public String displayOrderDetails(String customerId) throws JsonProcessingException;
 }

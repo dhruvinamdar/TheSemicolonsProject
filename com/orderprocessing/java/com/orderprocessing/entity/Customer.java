@@ -18,6 +18,26 @@ public class Customer {
 		super();
 	}
 
+	public Customer(String customerId, String customerName, String customerGST, String customerAddress,
+			String customerCity, String customerEmail, String customerContact, String customerPincode) {
+		super();
+		this.customerId = customerId;
+		this.customerName = customerName;
+		this.customerGST = customerGST;
+		this.customerAddress = customerAddress;
+		this.customerCity = customerCity;
+		this.customerEmail = customerEmail;
+		this.customerContact = customerContact;
+		this.customerPincode = customerPincode;
+	}
+
+	public Customer(String customerAddress, String customerCity, String customerState) {
+		super();
+		this.customerAddress = customerAddress;
+		this.customerCity = customerCity;
+		this.customerState = customerState;
+	}
+
 	public String getCustomerId() {
 		return customerId;
 	}

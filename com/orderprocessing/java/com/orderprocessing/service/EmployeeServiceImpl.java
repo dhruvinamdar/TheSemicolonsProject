@@ -1,10 +1,12 @@
 package com.orderprocessing.service;
 
-
 import java.io.IOException;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -31,51 +33,47 @@ public class EmployeeServiceImpl implements EmployeeService {
 	private OrderDao orderDao;
 	private ProductDao productDao;
 	private CustomerDao customerDao;
-	
-	
+
 	public EmployeeServiceImpl() {
-		
-	 employeeDao = new EmployeeDaoImpl();
-	 orderDao = new OrderDaoImpl();
-	 productDao = new ProductDaoImpl();
-	 customerDao = new CustomerDaoImpl();
-	 
+
+		employeeDao = new EmployeeDaoImpl();
+		orderDao = new OrderDaoImpl();
+		productDao = new ProductDaoImpl();
+		customerDao = new CustomerDaoImpl();
+
 	}
-	
+
 	@Override
-	public Employee login(String id,String password) {
+	public Employee login(String id, String password) {
 		// TODO Auto-generated method stub
-		
+
 		try {
-			return employeeDao.login(id,password);
-		}catch(EmployeeNotFoundException e)
-		{
+			return employeeDao.login(id, password);
+		} catch (EmployeeNotFoundException e) {
 			e.printStackTrace();
 		}
 		return null;
-		
+
 	}
 
 	@Override
 	public List<Order> getOrders() {
-		
+
 		List<Order> orderList = null;
-		
+
 		try {
 			orderList = orderDao.getOrders();
-			if(orderList.size()!=0)
+			if (orderList.size() != 0)
 				return orderList;
-				// NULL pointer exception possible to be handled later
-			
-				
-		}catch(NoOrderFoundException e) {
+			// NULL pointer exception possible to be handled later
+
+		} catch (NoOrderFoundException e) {
 			e.printStackTrace();
 			// ASK PRITI
 		}
-		
+
 		return null;
-		
-		
+
 	}
 
 	@Override
@@ -87,20 +85,21 @@ public class EmployeeServiceImpl implements EmployeeService {
 			List<Product> productList = Arrays
 					.asList(mapper.readValue(Paths.get(productJSON).toFile(), Product[].class));
 
+			Set<Product> hSet = new HashSet<Product>(productList);
+			List<Product> finaProductsList = new ArrayList<Product>(hSet);
+
 //			productList.forEach(System.out::println);
 
-			return productDao.importProducts(productList);
+			return productDao.importProducts(finaProductsList);
 
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
-			return new ProductsInsertionStatus(0, "failed");
+			e.printStackTrace();
 		}
-		catch(Exception e) {
-			return new ProductsInsertionStatus(0, "failed");
-		}
-		
+		return null;
+
 	}
-	
+
 	@Override
 	public String getProductData() {
 		// TODO Auto-generated method stub
@@ -120,7 +119,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 		// TODO Auto-generated method stub
 		return null;
 	}
-	
+
 	@Override
 	public void insertOrders(String orderJson) {
 		// TODO Auto-generated method stub

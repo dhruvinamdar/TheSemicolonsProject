@@ -320,6 +320,9 @@ a:hover, a:focus {
   .order-employee{
     display: flex;
   }
+  .order-customer{
+    display: flex;
+  }
   .navbar,
   .navbar-collapse {
     flex-direction: column;
@@ -342,6 +345,11 @@ a:hover, a:focus {
     margin-bottom: 0.7em;
   }
   .employee{
+    margin-left: 20rem;
+    margin-top: 2rem;
+    width: 1050px;
+  }
+  .customer{
     margin-left: 20rem;
     margin-top: 2rem;
     width: 1050px;
@@ -424,4 +432,42 @@ label{
 .employeeData{
 	color:white;
 	display:flex;
+}
+
+#toHideOrderId{
+	display:none;
+}
+
+#toHideOrderDate{
+	display:none;
+}
+
+#toHideShippingCost{
+	display:none;
+}
+
+#toHideTotalOrderValue{
+	display:none;
+}
+
+#orderTable{
+	background:white;
+	border: 1px solid black;
+}
+
+thead{
+	background: #1089ff;
+	color:white;
+}
+
+.productForm{
+	margin-top:2rem;
+	box-shadow: 0 4px 8px 0 rgb(0 0 0 / 20%), 0 6px 20px 0 rgb(0 0 0 / 19%);
+	margin-bottom:2rem;
+	padding:2rem;
+	background: white;
+}
+
+#ordersWithInvoiceButton{
+	display:none;
 }

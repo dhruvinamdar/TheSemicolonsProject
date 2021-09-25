@@ -14,17 +14,16 @@ import com.orderprocessing.utils.DBUtil;
 
 // implementation of Customer Dao layer
 public class CustomerDaoImpl implements CustomerDao {
-
-	Connection conn = null;
+	private Connection connection;
 	PreparedStatement stmt;
-	ResultSet rs = null;
+	ResultSet resultSet;
 	LocalDate statusDate;
 
+	private static final String FIND_CUSTOMER_BY_ID_OR_NAME = "select * from customer where CUSTOMER_NAME=? or CUSTOMER_ID=? and CUSTOMER_PASSWORD=?";
 	private static final String GET_CUSTOMER_BY_ID_OR_BY_NAME = "Select * from customer where CUSTOMER_ID = ? OR CUSTOMER_NAME = ?";
 
 	public CustomerDaoImpl() {
-		conn = DBUtil.getMyConnection();
-		stmt = null;
+		connection = DBUtil.getMyConnection();
 	}
 
 	@Override
@@ -33,26 +32,26 @@ public class CustomerDaoImpl implements CustomerDao {
 		System.out.println("In get CustomerDAOIMPL" + customerIdOrName);
 		ObjectMapper objectMapper = new ObjectMapper();
 		stmt = null;
-		rs = null;
+		resultSet = null;
 		Customer customer = new Customer();
 		String customerToJson = null;
 		try {
-			stmt = conn.prepareStatement(GET_CUSTOMER_BY_ID_OR_BY_NAME);
+			stmt = connection.prepareStatement(GET_CUSTOMER_BY_ID_OR_BY_NAME);
 			stmt.setString(1, customerIdOrName);
 			stmt.setString(2, customerIdOrName);
 
-			rs = stmt.executeQuery();
-			if (rs.next()) {
+			resultSet = stmt.executeQuery();
+			if (resultSet.next()) {
 
-				customer.setCustomerId(rs.getString("CUSTOMER_ID"));
-				customer.setCustomerName(rs.getString("CUSTOMER_NAME"));
-				customer.setCustomerGST(rs.getString("CUSTOMER_GST"));
-				customer.setCustomerAddress(rs.getString("CUSTOMER_ADDRESS_LINE1"));
-				customer.setCustomerCity(rs.getString("CUSTOMER_ADDRESS_CITY"));
-				customer.setCustomerState(rs.getString("CUSTOMER_ADDRESS_STATE"));
-				customer.setCustomerEmail(rs.getString("CUSTOMER_EMAIL"));
-				customer.setCustomerContact(rs.getString("CUSTOMER_CONTACT"));
-				customer.setCustomerPincode(rs.getString("CUSTOMER_PINCODE"));
+				customer.setCustomerId(resultSet.getString("CUSTOMER_ID"));
+				customer.setCustomerName(resultSet.getString("CUSTOMER_NAME"));
+				customer.setCustomerGST(resultSet.getString("CUSTOMER_GST"));
+				customer.setCustomerAddress(resultSet.getString("CUSTOMER_ADDRESS_LINE1"));
+				customer.setCustomerCity(resultSet.getString("CUSTOMER_ADDRESS_CITY"));
+				customer.setCustomerState(resultSet.getString("CUSTOMER_ADDRESS_STATE"));
+				customer.setCustomerEmail(resultSet.getString("CUSTOMER_EMAIL"));
+				customer.setCustomerContact(resultSet.getString("CUSTOMER_CONTACT"));
+				customer.setCustomerPincode(resultSet.getString("CUSTOMER_PINCODE"));
 
 				customerToJson = objectMapper.writeValueAsString(customer);
 				System.out.println(customerToJson);
@@ -69,8 +68,8 @@ public class CustomerDaoImpl implements CustomerDao {
 			e.printStackTrace();
 		} finally {
 			try {
-				if (rs != null)
-					rs.close();
+				if (resultSet != null)
+					resultSet.close();
 				if (stmt != null)
 					stmt.close();
 			} catch (SQLException ex) {
@@ -83,43 +82,43 @@ public class CustomerDaoImpl implements CustomerDao {
 
 	@Override
 	public Customer checkCredentials(String customerLogin, String customerPassword) throws CustomerNotFoundException {
-		String sql = "select * from customer where CUSTOMER_NAME=? or CUSTOMER_ID=? and CUSTOMER_PASSWORD=?";
+		stmt = null;
+		resultSet = null;
+		Customer customer = new Customer();
+		System.out.println("In customer DaoImpl");
 		try {
-			stmt = conn.prepareStatement(sql);
+			stmt = connection.prepareStatement(FIND_CUSTOMER_BY_ID_OR_NAME);
 			stmt.setString(1, customerLogin);
 			stmt.setString(2, customerLogin);
 			stmt.setString(3, customerPassword);
-			Customer customer = new Customer();
-			ResultSet rs = stmt.executeQuery(sql);
-			if (rs.next()) {
-				if (((rs.getString(1).equals(customerLogin)) || (rs.getString(1).equals(customerLogin)))
-						&& (rs.getString(2).equals(customerPassword))) {
-					customer.setCustomerId(rs.getString("CUSTOMER_ID"));
-					customer.setCustomerName(rs.getString("CUSTOMER_NAME"));
-					customer.setCustomerGST(rs.getString("CUSTOMER_GST"));
-					customer.setCustomerAddress(rs.getString("CUSTOMER_ADDRESS_LINE1"));
-					customer.setCustomerCity(rs.getString("CUSTOMER_ADDRESS_CITY"));
-					customer.setCustomerState(rs.getString("CUSTOMER_STATE"));
-					customer.setCustomerEmail(rs.getString("CUSTOMER_EMAIL"));
-					customer.setCustomerContact(rs.getString("CUSTOMER_CONTACT"));
-					customer.setCustomerPincode(rs.getString("CUSTOMER_PINCODE"));
-				} else {
-					throw new CustomerNotFoundException("Customer not found");
-				}
+			resultSet = stmt.executeQuery();
+			if (resultSet.next()) {
+				customer.setCustomerId(resultSet.getString("CUSTOMER_ID"));
+				customer.setCustomerName(resultSet.getString("CUSTOMER_NAME"));
+				customer.setCustomerGST(resultSet.getString("CUSTOMER_GST"));
+				customer.setCustomerAddress(resultSet.getString("CUSTOMER_ADDRESS_LINE1"));
+				customer.setCustomerCity(resultSet.getString("CUSTOMER_ADDRESS_CITY"));
+				customer.setCustomerState(resultSet.getString("CUSTOMER_ADDRESS_STATE"));
+				customer.setCustomerEmail(resultSet.getString("CUSTOMER_EMAIL"));
+				customer.setCustomerContact(resultSet.getString("CUSTOMER_CONTACT"));
+				customer.setCustomerPincode(resultSet.getString("CUSTOMER_PINCODE"));
+				System.out.println(customer.getCustomerId());
+				return customer;
 			}
-			return customer;
 
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
 			try {
-				// closed Prepared Statement
-				stmt.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
+				if (resultSet != null)
+					resultSet.close();
+				if (stmt != null)
+					stmt.close();
+			} catch (SQLException ex) {
+				ex.printStackTrace();
 			}
 		}
-		return null;
+		throw new CustomerNotFoundException("Customer not found");
 	}
 
 }

@@ -1,3 +1,4 @@
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,6 +10,7 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
+<div class = "order-customer">
   <nav class="navbar navbar-expand-lg navbar-dark bg-primary bs-side-navbar">
     <img src="images/logo.jpg" class="navbar-brand logo">
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
@@ -19,13 +21,16 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item active">
-                <p class="user-info">Welcome Customer !</p>
+                <span style="display:flex">
+                	<input type="text" class="user-info" value="Welcome">
+	                <input type="text" class="user-info" value="${customer.customerName}" readonly> 
+                </span>
             </li>
             <li class="nav-item active">
-                <a class="nav-link" href="#">List Of Quotes</a>
+                <button class="nav-link" style="background:none; border:none" onclick="showQuotes()">List Of Quotes</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">List Of Orders</a>
+                <button class="nav-link" style="background:none; border:none" onclick="showOrders(event)">List Of Orders</button>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="customerLogin.html" >Sign Out</a>
@@ -33,10 +38,30 @@
         </ul>
         
     </div>
-  </nav>
-
+  </nav>	
+  <div class="customer">
+  	<form class="newQuote" id="newQuote" action="CustomerViewInvoiceServlet" method="get">
+  	<!-- <form class="newQuote" id="newQuote" action="CustomerViewDetailedQuoteServlet" method="get">
+  		-->
+  		<div class="form-group row">
+            <label for="customerId" class="col-sm-2 col-form-label">Customer Id/Name</label>
+            <div class="col-sm-10">
+              <input type="text" class="form-control" id="customerIdName" value="${customer.customerName}" readonly>
+            </div>
+          </div>
+            <input type="text" name="orderId" id="hiddenField" style="display:none">
+            <div id="orderData"></div>
+            <div id="ordersWithInvoiceButton"></div>
+            <button type="button" class="btn btn-primary" onclick="showCustomerQuote(event)" id="showOrders">Show Products</button>
+            <button type="button" class="btn btn-primary" id="showListOfOrders">Show Orders</button>
+     </form>
+     
+     
+  </div>
+</div>
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+  <script src="script/script.js"></script>
 </body>
 </html>

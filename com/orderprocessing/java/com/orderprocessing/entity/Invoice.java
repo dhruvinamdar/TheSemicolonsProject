@@ -1,38 +1,63 @@
 package com.orderprocessing.entity;
 
 import java.sql.Date;
-import java.util.Objects;
 
 public class Invoice {
 	private String invoiceId;
 	private Date invoiceDate;
 	private float totalGstAmount;
 	private float totalInvoiceValue;
-	private String status;
-	private String orderId;
+	private String invoiceStatus;
+	private Order orders;
+	private Customer customer;
+	private ProductDetails productDetails;
 
 	public Invoice() {
-		super();
+
 	}
 
-	public Invoice(String invoiceId, Date invoiceDate, float totalGstAmount, float totalInvoiceValue, String status,
-			String orderId) {
+	@Override
+	public String toString() {
+		return "Invoice [invoiceId=" + invoiceId + ", invoiceDate=" + invoiceDate + ", totalGstAmount=" + totalGstAmount
+				+ ", totalInvoiceValue=" + totalInvoiceValue + ", invoiceStatus=" + invoiceStatus + ", orders=" + orders
+				+ ", customer=" + customer + ", productDetails=" + productDetails + "]";
+	}
+
+	public Invoice(String invoiceId, Date invoiceDate, float totalGstAmount, float totalInvoiceValue,
+			String invoiceStatus, Order orders, Customer customer, ProductDetails productDetails) {
 		super();
 		this.invoiceId = invoiceId;
 		this.invoiceDate = invoiceDate;
 		this.totalGstAmount = totalGstAmount;
 		this.totalInvoiceValue = totalInvoiceValue;
-		this.status = status;
-		this.orderId = orderId;
+		this.invoiceStatus = invoiceStatus;
+		this.orders = orders;
+		this.customer = customer;
+		this.productDetails = productDetails;
 	}
 
-	public Invoice(String invoiceId, Date invoiceDate, float totalGstAmount, float totalInvoiceValue, String status) {
-		super();
-		this.invoiceId = invoiceId;
-		this.invoiceDate = invoiceDate;
-		this.totalGstAmount = totalGstAmount;
-		this.totalInvoiceValue = totalInvoiceValue;
-		this.status = status;
+	public Order getOrders() {
+		return orders;
+	}
+
+	public void setOrders(Order orders) {
+		this.orders = orders;
+	}
+
+	public Customer getCustomer() {
+		return customer;
+	}
+
+	public void setCustomer(Customer customer) {
+		this.customer = customer;
+	}
+
+	public ProductDetails getProductDetails() {
+		return productDetails;
+	}
+
+	public void setProductDetails(ProductDetails productDetails) {
+		this.productDetails = productDetails;
 	}
 
 	public String getInvoiceId() {
@@ -67,46 +92,12 @@ public class Invoice {
 		this.totalInvoiceValue = totalInvoiceValue;
 	}
 
-	public String getStatus() {
-		return status;
+	public String getInvoiceStatus() {
+		return invoiceStatus;
 	}
 
-	public void setStatus(String status) {
-		this.status = status;
-	}
-
-	public String getOrderId() {
-		return orderId;
-	}
-
-	public void setOrderId(String orderId) {
-		this.orderId = orderId;
-	}
-
-	@Override
-	public int hashCode() {
-		return Objects.hash(invoiceDate, invoiceId, orderId, status, totalGstAmount, totalInvoiceValue);
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Invoice other = (Invoice) obj;
-		return Objects.equals(invoiceDate, other.invoiceDate) && Objects.equals(invoiceId, other.invoiceId)
-				&& Objects.equals(orderId, other.orderId) && Objects.equals(status, other.status)
-				&& Float.floatToIntBits(totalGstAmount) == Float.floatToIntBits(other.totalGstAmount)
-				&& Float.floatToIntBits(totalInvoiceValue) == Float.floatToIntBits(other.totalInvoiceValue);
-	}
-
-	@Override
-	public String toString() {
-		return "Invoice [invoiceId=" + invoiceId + ", invoiceDate=" + invoiceDate + ", totalGstAmount=" + totalGstAmount
-				+ ", totalInvoiceValue=" + totalInvoiceValue + ", status=" + status + ", orderId=" + orderId + "]";
+	public void setInvoiceStatus(String invoiceStatus) {
+		this.invoiceStatus = invoiceStatus;
 	}
 
 }

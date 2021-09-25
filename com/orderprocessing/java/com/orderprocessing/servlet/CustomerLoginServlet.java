@@ -1,9 +1,7 @@
 package com.orderprocessing.servlet;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -21,43 +19,43 @@ import com.orderprocessing.service.CustomerServiceImpl;
 public class CustomerLoginServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		doPost(request, response);
-	}
-
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		PrintWriter out = response.getWriter();
+
 		response.setContentType("text/html");
 		// String customerName = request.getParameter("customerName");
 		String customerLogin = request.getParameter("customerNameOrId");
+		System.out.println(customerLogin);
 		String customerPassword = request.getParameter("password");
+		System.out.println(customerPassword);
 		CustomerService cservice = new CustomerServiceImpl();
-		Customer customer = cservice.validateCustomer(customerLogin, customerPassword);
+		try {
+			Customer customer = cservice.validateCustomer(customerLogin, customerPassword);
+			if (customer != null) {
 
-		if (customer != null) {
-//			HttpSession session = request.getSession(false);
-			// session.setMaxInactiveInterval(20);
-//			if (session == null) {
-			// System.out.print("new session");
-//				session = request.getSession(true);
-			request.getSession(true);
-//				session.setAttribute("customer", customer);
-//			} else {
+//				HttpSession session = request.getSession(false);
+				// session.setMaxInactiveInterval(20);
+//				if (session == null) {
+				// System.out.print("new session");
+//					session = request.getSession(true);
+				// request.getSession(true);
+//					session.setAttribute("customer", customer);
+//				} else {
 //				session.invalidate();
 //				session = request.getSession(true);
 //			}
+				request.setAttribute("customer", customer);
+				System.out.println("Customer login");
+				request.getRequestDispatcher("customerOrderManagement.jsp").forward(request, response);
+			} else {
+				System.out.println("in else");
+				request.getRequestDispatcher("login.html").forward(request, response);
 
-			RequestDispatcher rd = request.getRequestDispatcher("CustomerViewOrdersServlet");
-			rd.forward(request, response);
-		} else {
-			out.println("<h1>Please enter the correct credentials</h1>");
-			RequestDispatcher rd = request.getRequestDispatcher("login.html");
-			rd.include(request, response);
-
+			}
+		} catch (Exception exception) {
+			request.setAttribute("", exception.getMessage());
+			request.getRequestDispatcher("login.html").forward(request, response);
 		}
-
 	}
 
 }

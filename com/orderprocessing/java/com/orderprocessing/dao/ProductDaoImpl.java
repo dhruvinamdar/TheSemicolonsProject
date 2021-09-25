@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -16,7 +17,7 @@ import com.orderprocessing.utils.DBUtil;
 
 public class ProductDaoImpl implements ProductDao {
 
-	private Connection conn;
+	private Connection connection;
 
 	private PreparedStatement ps;
 	private final static String INSERT_PRODUCT = "Insert into product (PRODUCT_NAME,PRODUCT_PRICE,PRODUCT_CATEGORY) values (?,?,?)";
@@ -24,10 +25,9 @@ public class ProductDaoImpl implements ProductDao {
 
 	ResultSet rs;
 	PreparedStatement stmt;
-	private Connection connection;
 
 	public ProductDaoImpl() {
-		conn = DBUtil.getMyConnection();
+		connection = DBUtil.getMyConnection();
 	}
 
 	@Override
@@ -46,7 +46,7 @@ public class ProductDaoImpl implements ProductDao {
 		String productArrayToJson = null;
 		List<Product> productList = new ArrayList<Product>();
 		try {
-			stmt = conn.prepareStatement(GET_ALL_PRODUCTS);
+			stmt = connection.prepareStatement(GET_ALL_PRODUCTS);
 			rs = stmt.executeQuery();
 			while (rs.next()) {
 				Product product = new Product();
@@ -75,17 +75,44 @@ public class ProductDaoImpl implements ProductDao {
 	}
 
 	@Override
-	public ProductsInsertionStatus importProducts(List<Product> productList) {
+	public ProductsInsertionStatus importProducts(List<Product> productJsonList) {
 		// TODO Auto-generated method stub
 		stmt = null;
+		List<Product> productfromDBList = new ArrayList<Product>();
+		List<Product> finalProductList = new ArrayList<Product>();
+		HashMap<String, Product> productMap = new HashMap<>();
+
 		try {
 			ProductsInsertionStatus productsInsertionStatus = new ProductsInsertionStatus();
-			stmt = conn.prepareStatement(INSERT_PRODUCT);
-			// Batch Insert
-			conn.setAutoCommit(false);
+			stmt = connection.prepareStatement(GET_ALL_PRODUCTS);
+			rs = stmt.executeQuery();
 
-			for (Product product : productList) {
-//				stmt.setString(1, product.getProductId());
+			while (rs.next()) {
+				Product product = new Product();
+				product.setProductId(rs.getString("PRODUCT_ID"));
+				product.setPrice(rs.getFloat("PRODUCT_PRICE"));
+				product.setProductName(rs.getString("PRODUCT_NAME"));
+				product.setCategory(rs.getString("PRODUCT_CATEGORY"));
+				productfromDBList.add(product);
+			}
+			for (Product product : productfromDBList)
+				productMap.put(product.getProductName(), product);
+
+			System.out.println(productMap.toString());
+
+			for (int i = 0; i < productJsonList.size(); i++) {
+				if (productMap.containsKey(productJsonList.get(i).getProductName()))
+					continue;
+				else
+					finalProductList.add(productJsonList.get(i));
+
+			}
+
+			stmt = connection.prepareStatement(INSERT_PRODUCT);
+			// Batch Insert
+			connection.setAutoCommit(false);
+
+			for (Product product : finalProductList) {
 				stmt.setString(1, product.getProductName());
 				stmt.setFloat(2, product.getPrice());
 				stmt.setString(3, product.getCategory());
@@ -94,7 +121,7 @@ public class ProductDaoImpl implements ProductDao {
 
 			int[] inserted = stmt.executeBatch();
 			System.out.println(inserted.length);
-			conn.commit();
+			connection.commit();
 			productsInsertionStatus.setNoOfProductsImported(inserted.length);
 			productsInsertionStatus.setStatus("completed");
 
@@ -102,10 +129,10 @@ public class ProductDaoImpl implements ProductDao {
 
 		} catch (SQLException e) {
 			// Do the rollback
-			doRollback(conn);
+			doRollback(connection);
 			try {
 				// Make it back to default.
-				conn.setAutoCommit(true);
+				connection.setAutoCommit(true);
 			} catch (SQLException ex1) {
 				ex1.printStackTrace();
 			}

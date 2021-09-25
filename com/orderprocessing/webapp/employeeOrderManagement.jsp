@@ -19,7 +19,7 @@
               <li class="nav-item">
               <span class="employeeData">
 	               <input class="user-info" value="Welcome">
-	               <input class="user-info" value="${employee.employeeName}">
+	               <input class="user-info" value="${employee.employeeName}" readonly>
               </span>
               <span class = "employeeData user-info" id="LoginDate">
               </span>
@@ -55,31 +55,31 @@
             <div class="form-group row" id="toHideGST">
               <label for="customerGSTNo" class="col-sm-2 col-form-label">Customer GST No</label>
               <div class="col-sm-10">
-                <input type="text" class="form-control" id="customerGSTNo" placeholder="Enter Customer GST Number" readonly>
+                <input type="text" class="form-control" id="customerGSTNo" readonly>
               </div>
             </div>
             <div class="form-group row" id="toHideAddress">
               <label for="inputAddress" class="col-sm-2 col-form-label">Address</label>
               <div class="col-sm-10">
-                <input type="text" class="form-control" id="inputAddress" placeholder="House No- 123, Main, St" readonly>
+                <input type="text" class="form-control" id="inputAddress" readonly>
               </div>
             </div>
             <div class="form-group row" id="toHideCity">
               <label for="inputCity" class="col-sm-2 col-form-label">City</label>
               <div class="col-sm-10">
-                <input type="text" class="form-control" id="inputCity" placeholder="Enter City" readonly>
+                <input type="text" class="form-control" id="inputCity" readonly>
               </div>
             </div>
             <div class="form-group row" id="toHidePincode">
               <label for="inputPincode" class="col-sm-2 col-form-label">Pincode</label>
               <div class="col-sm-10">
-                <input type="text" class="form-control" id="inputPincode" placeholder="Enter Pincode" readonly>
+                <input type="text" class="form-control" id="inputPincode" readonly>
               </div>
             </div>
             <div class="form-group row" id="toHideEmail">
               <label for="inputEmail" class="col-sm-2 col-form-label">Email</label>
               <div class="col-sm-10">
-                <input type="email" class="form-control" id="inputEmail" placeholder="Enter Email" readonly>
+                <input type="email" class="form-control" id="inputEmail" readonly>
               </div>
             </div>
             <div id="products"></div>

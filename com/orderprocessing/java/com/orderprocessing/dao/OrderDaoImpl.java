@@ -1,15 +1,18 @@
 package com.orderprocessing.dao;
 
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.orderprocessing.entity.DetailedQuote;
 import com.orderprocessing.entity.Order;
+import com.orderprocessing.entity.ProductDetails;
 import com.orderprocessing.entity.ProductTable;
 import com.orderprocessing.entity.Quote;
 import com.orderprocessing.exception.NoOrderFoundException;
@@ -21,6 +24,9 @@ public class OrderDaoImpl implements OrderDao {
 	private static final String INSERT_ORDERS = "INSERT into orders(ORDER_DATE,TOTAL_ORDER_VALUE,SHIPPING_COST,CUSTOMER_ID) VALUES (?,?,?,?)";
 	private static final String INSERT_ORDER_LINE = "INSERT into order_line VALUES (?,?,?,?)";
 	private static final String GET_ORDER_ID = "SELECT * FROM orders WHERE ORDER_ID = (SELECT MAX(ORDER_ID) FROM orders)";
+	private static final String quote = "select ORDER_ID, ORDER_DATE, TOTAL_ORDER_VALUE, SHIPPING_COST from orders where CUSTOMER_ID=? and STATUS='Pending'";
+	private static final String quoteDetails = "SELECT orders.ORDER_ID, orders.ORDER_DATE, orders.TOTAL_ORDER_VALUE, orders.SHIPPING_COST, orders.SHIPPING_AGENCY, orders.STATUS, customer.CUSTOMER_ADDRESS_LINE1, customer.CUSTOMER_ADDRESS_CITY, customer.CUSTOMER_ADDRESS_STATE, product.product_name, product.product_price, order_line.quantity from order_line INNER JOIN customer ON order_line.ORDERLINE_CUSTOMER_ID = customer.CUSTOMER_ID inner join orders on orders.order_id = order_line.orderline_order_id inner join product on product.product_id = order_line.orderline_product_id WHERE orders.ORDER_ID=?;";
+	private static final String order = "select ORDER_ID, ORDER_DATE, SHIPPING_COST, TOTAL_ORDER_VALUE, STATUS from orders where STATUS='Approved' or STATUS='Completed' and CUSTOMER_ID=?";
 
 	ResultSet resultSet;
 	PreparedStatement stmt;
@@ -41,8 +47,8 @@ public class OrderDaoImpl implements OrderDao {
 			stmt = connection.prepareStatement(SELECT_ORDERS);
 			resultSet = stmt.executeQuery();
 			if (resultSet.next()) {
-				orderList.add(new Order(resultSet.getString(1), resultSet.getDate(2), resultSet.getString(3),
-						resultSet.getFloat(4), resultSet.getFloat(5), resultSet.getString(6), resultSet.getString(7)));
+				orderList.add(new Order(resultSet.getString(1), resultSet.getDate(2), resultSet.getFloat(4),
+						resultSet.getFloat(5), resultSet.getString(6), resultSet.getString(7)));
 			}
 		} catch (SQLException ex) {
 			ex.printStackTrace();
@@ -67,7 +73,7 @@ public class OrderDaoImpl implements OrderDao {
 		try {
 			stmt = connection.prepareStatement(INSERT_ORDERS);
 			connection.setAutoCommit(false);
-			stmt.setDate(1, Date.valueOf(newOrder.getOrderDate()));
+			stmt.setDate(1, java.sql.Date.valueOf(newOrder.getOrderDate()));
 			stmt.setFloat(2, Float.parseFloat(newOrder.getOrderValue()));
 			stmt.setFloat(3, Float.parseFloat(newOrder.getShippingCost()));
 			stmt.setString(4, newOrder.getCustomerId());
@@ -154,56 +160,11 @@ public class OrderDaoImpl implements OrderDao {
 		}
 	}
 
-	public List<Order> displayQuoteDetails() {
-		String sql = "select ORDER_ID, ORDER_DATE, TOTAL_ORDER_VALUE, SHIPPING_COST from orders where STATUS='Pending'";
-		try {
-			stmt = connection.prepareStatement(sql);
-			List<Order> quoteList = new ArrayList<>();
-			ResultSet rs = stmt.executeQuery(sql);
-			while (rs.next()) {
-				Order quote = new Order();
-				quote.setOrderId(rs.getString("ORDER_ID"));
-				quote.setOrderDate(rs.getDate("ORDER_DATE"));
-				quote.setShippingCost(rs.getFloat("TOTAL_ORDER_VALUE"));
-				quote.setTotalOrderValue(rs.getFloat("SHIPPING_COST"));
-				quoteList.add(quote);
-			}
-			return quoteList;
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return null;
-	}
-
 	/*
 	 * Method to display all details of a particular quote including customer
 	 * address. Returns an Array List of type Object containing objects of type
 	 * Order and Customer.
 	 */
-	public List<Object> displayDetailedQuote(String orderId) {
-		String sql = "SELECT orders.ORDER_ID, orders.ORDER_DATE, orders.TOTAL_ORDER_VALUE, orders.SHIPPING_COST, orders.SHIPPING_AGENCY, orders.STATUS, customer.CUSTOMER_ADDRESS_LINE1, customer.CUSTOMER_ADDRESS_CITY, customer.CUSTOMER_ADDRESS_STATE from orders INNER JOIN customer ON orders.CUSTOMER_ID = customer.CUSTOMER_ID WHERE ORDER_ID=?";
-		try {
-			stmt = connection.prepareStatement(sql);
-			stmt.setString(1, orderId);
-			List<Object> quoteList = new ArrayList<>();
-			ResultSet rs = stmt.executeQuery(sql);
-			// quoteList.add(new Order(rs.getString(1), rs.getDate(2), rs.getFloat(3),
-			// rs.getFloat(4), rs.getString(5),
-			// rs.getString(6)));
-//			quoteList.add(new Customer(rs.getString(7), rs.getString(8), rs.getString(9)));
-			return quoteList;
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			try {
-				// closed Prepared Statement
-				stmt.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-		}
-		return null;
-	}
 
 	/*
 	 * Method to convert quote to order by changing status from "Pending" to
@@ -211,19 +172,26 @@ public class OrderDaoImpl implements OrderDao {
 	 * rollback.
 	 */
 	public void setQuoteStatus(String orderId) {
-		LocalDate statusDate = LocalDate.now();
-		String sql = "update testorder set STATUS_DATE='" + statusDate + "', STATUS='Approved' where ORDER_ID=?";
+		System.out.println("Order Id in DAOIMPL" + orderId);
+		String sql = "update orders set STATUS_DATE=?, STATUS=? where ORDER_ID=?";
+		Date date = new Date();
 		try {
+			connection.setAutoCommit(false);
 			stmt = connection.prepareStatement(sql);
-			stmt.setString(1, orderId);
-			int num = stmt.executeUpdate(sql);
+			stmt.setDate(1, new java.sql.Date(date.getTime()));
+			stmt.setString(2, "Approved");
+			stmt.setString(3, orderId);
+			int num = stmt.executeUpdate();
 			// System.out.println("Changed");
 			if (num > 0) {
+				System.out.println("Status Approved");
 				connection.commit();
+				connection.setAutoCommit(true);
 			}
 		} catch (SQLException e) {
 			try {
 				connection.rollback();
+				connection.setAutoCommit(true);
 			} catch (SQLException e1) {
 				e1.printStackTrace();
 			}
@@ -243,12 +211,13 @@ public class OrderDaoImpl implements OrderDao {
 	 * of all orders whose status are "Approved" or "Completed". Returns an Array
 	 * List of type Order.
 	 */
-	public List<Order> displayOrderDetails() {
-		String sql = "select ORDER_ID, ORDER_DATE, SHIPPING_COST, TOTAL_ORDER_VALUE, STATUS from testorder where STATUS='Approved' or STATUS='Completed'";
+	public String displayOrderDetails(String customerId) throws JsonProcessingException {
+		ObjectMapper objectMapper = new ObjectMapper();
 		try {
-			stmt = connection.prepareStatement(sql);
+			stmt = connection.prepareStatement(order);
+			stmt.setString(1, customerId);
 			List<Order> orderList = new ArrayList<>();
-			ResultSet rs = stmt.executeQuery(sql);
+			ResultSet rs = stmt.executeQuery();
 			while (rs.next()) {
 				Order order = new Order();
 				order.setOrderId(rs.getString(1));
@@ -258,7 +227,80 @@ public class OrderDaoImpl implements OrderDao {
 				order.setStatus(rs.getString(5));
 				orderList.add(order);
 			}
-			return orderList;
+			String orderToString = objectMapper.writeValueAsString(orderList);
+			return orderToString;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				// closed Prepared Statement
+				stmt.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return null;
+	}
+
+	@Override
+	public String displayQuoteDetails(String customerId) throws JsonProcessingException {
+		ObjectMapper objectMapper = new ObjectMapper();
+		try {
+			stmt = connection.prepareStatement(quote);
+			stmt.setString(1, customerId);
+			List<Order> quoteList = new ArrayList<>();
+			ResultSet rs = stmt.executeQuery();
+			while (rs.next()) {
+				Order quote = new Order();
+				quote.setOrderId(rs.getString("ORDER_ID"));
+				quote.setOrderDate(rs.getDate("ORDER_DATE"));
+				quote.setShippingCost(rs.getFloat("TOTAL_ORDER_VALUE"));
+				quote.setTotalOrderValue(rs.getFloat("SHIPPING_COST"));
+				quoteList.add(quote);
+			}
+			String quoteListToString = objectMapper.writeValueAsString(quoteList);
+			return quoteListToString;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	@Override
+	public DetailedQuote displayDetailedQuote(String orderId) throws JsonProcessingException {
+		ObjectMapper objectMapper = new ObjectMapper();
+		System.out.println("In Dao : display detailed quote");
+		try {
+			stmt = connection.prepareStatement(quoteDetails);
+			stmt.setString(1, orderId);
+//			List<Object> quoteList = new ArrayList<>();
+			DetailedQuote quote = new DetailedQuote();
+			ResultSet resultSet = stmt.executeQuery();
+			String detailedQuoteToString = null;
+			List<ProductDetails> products = new ArrayList<>();
+
+			while (resultSet.next()) {
+//				quoteList.add(new Order(resultSet.getString(1), resultSet.getDate(2), resultSet.getFloat(3),
+//						resultSet.getFloat(4), resultSet.getString(5), resultSet.getString(6)));
+//				quoteList.add(new Customer(resultSet.getString(7), resultSet.getString(8), resultSet.getString(9)));
+//				quoteList.add(new Product(resultSet.getString(10), resultSet.getFloat(11)));
+//				quoteList.add(new OrderLine(resultSet.getInt(12)));
+				products.add(new ProductDetails(resultSet.getString("PRODUCT_NAME"),
+						resultSet.getFloat("PRODUCT_PRICE"), resultSet.getInt("QUANTITY")));
+				quote.setOrderId(resultSet.getString("ORDER_ID"));
+				quote.setOrderDate(resultSet.getDate("ORDER_DATE").toString());
+				quote.setShippingAgency(resultSet.getString("SHIPPING_AGENCY"));
+				System.out.println("Order Id" + resultSet.getString("ORDER_ID"));
+				quote.setShippingAddress(resultSet.getString("CUSTOMER_ADDRESS_LINE1"));
+				quote.setShippingCost(resultSet.getFloat("SHIPPING_COST"));
+				quote.setOrderValue(resultSet.getFloat("TOTAL_ORDER_VALUE"));
+			}
+			quote.setProducts(products);
+			System.out.println("In Dao" + quote);
+//			detailedQuoteToString = objectMapper.writeValueAsString(quote);
+//			System.out.println(detailedQuoteToString);
+//			return detailedQuoteToString;
+			return quote;
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {

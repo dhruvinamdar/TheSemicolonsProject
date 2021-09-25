@@ -1,4 +1,7 @@
-// ------------------------------------- AJAX Request to Get CCustomer Details and Product Data ------------------------------------------------------
+
+// ================================================== Employee =======================================================================================
+
+// ------------------------------------- AJAX Request to Get Customer Details and Product Data ------------------------------------------------------
 function showProductTable(event){
 	event.preventDefault();
 	var cId = document.getElementById("customerId").value;
@@ -25,17 +28,13 @@ function showProductTable(event){
 	}
 	xhr.send();
 	
-	//step 4
 	
-    
 	event.preventDefault();
 	document.getElementById('toHideGST').style.display = "flex";
 	document.getElementById('toHideAddress').style.display = "flex";
 	document.getElementById('toHideCity').style.display = "flex";
 	document.getElementById('toHidePincode').style.display = "flex";
 	document.getElementById('toHideEmail').style.display = "flex";
-	
-	
 	
     var form = document.getElementById('submitcustomer');
     form.style.display = "none";
@@ -210,4 +209,189 @@ function displayDate(){
 	document.getElementById("loginDate").innerHTML = datetime;
 	console.log(datetime);
 	console.log("abc");
+}
+
+// ================================================================================================================================
+
+
+// ======================================================================= Customer ================================================
+
+function showCustomerQuote(event){
+	event.preventDefault();
+	console.log("in show");
+	var cId = document.getElementById("customerIdName").value;
+	console.log("customer Id is "+cId);
+	var xhr = new XMLHttpRequest();
+	if(window.XMLHttpRequest){
+		xhr = new XMLHttpRequest();
+	}
+	else if(window.ActiveXObject){
+		xhr = new ActiveXObject("Microsoft.XMLHTTP"); 	
+	}
+	//var preference = getPreference();
+	xhr.open("GET","CustomerViewQuoteServlet?customerId="+cId, true);
+	
+	xhr.onreadystatechange=function(){
+		if(xhr.readyState===4 && xhr.status==200){
+			var customerQuoteData = xhr.responseText;
+			console.log(customerQuoteData);
+			showOrderData(customerQuoteData);
+		}
+		
+	}
+	xhr.send();
+}
+
+// =================================================================================================================================
+function showOrderData(customerQuoteData){
+	var customerQuoteData = JSON.parse(customerQuoteData);
+	
+	// creating dynamic table
+    var ordertable = document.createElement('table');
+    // set the table "id"
+	ordertable.setAttribute('class', 'table table-hover');
+    ordertable.setAttribute('id', 'orderTable');
+    var arrHead = ['Order ID', 'Order Date', 'Total Order Value', 'Shipping Cost', 'Show Details'];
+	console.log(customerQuoteData);
+    var tr = ordertable.insertRow(-1);
+    // creating table header
+    for (var h = 0; h < arrHead.length; h++) {
+        var th = document.createElement('th');          
+        th.innerHTML = arrHead[h];
+		th.setAttribute('scope', 'col');
+        tr.appendChild(th);
+		th.style.background = '#007bff';
+		th.style.color = 'white';
+    }
+	console.log(customerQuoteData.length);
+    for (var c = 0; c <= customerQuoteData.length - 1; c++) {
+        	tr = ordertable.insertRow(-1);
+        	// table data
+            var td = document.createElement('td');        
+            td = tr.insertCell(-1);
+			var orderId = customerQuoteData[c].orderId;
+            td.innerHTML = customerQuoteData[c].orderId;                 // ADD VALUES TO EACH CELL.
+            td = tr.insertCell(-1);
+            td.innerHTML = customerQuoteData[c].orderDate; 
+            td = tr.insertCell(-1);
+            td.innerHTML = customerQuoteData[c].totalOrderValue; 
+            td = tr.insertCell(-1);
+			td.innerHTML = customerQuoteData[c].shippingCost; 
+            td = tr.insertCell(-1);
+			td.innerHTML = '<button type="submit" class="btn btn-primary" id="'+orderId+'" onclick="populateHiddenField(this.id)">Show Quote Details</button>';
+			
+    }
+	document.getElementById('showOrders').style.display = 'none';
+// appending table to div
+    document.getElementById('orderData').appendChild(ordertable);
+    
+}
+
+// -------------------------------------- Display Quote Details -----------------------------------------------------------------------------------
+function displayQuoteDetails(orderId){
+	var xhr = new XMLHttpRequest();
+	if(window.XMLHttpRequest){
+		xhr = new XMLHttpRequest();
+	}
+	else if(window.ActiveXObject){
+		xhr = new ActiveXObject("Microsoft.XMLHTTP"); 	
+	}
+	//var preference = getPreference();
+	xhr.open("GET","CustomerViewDetailedQuoteServlet?orderId="+orderId, true);
+	
+	xhr.onreadystatechange=function(){
+		if(xhr.readyState===4 && xhr.status==200){
+			var customerQuoteDetails = xhr.responseText;
+			console.log(customerQuoteDetails);
+		}
+		
+	}
+	xhr.send();
+}
+
+function populateHiddenField(id){
+	document.getElementById("hiddenField").value = id;
+	document.getElementById("hiddenField").style.display = "block";
+}
+
+// ------------------------------------ Show Products ---------------------------------------------------------------------------------------------
+function showOrders(event){
+	event.preventDefault();
+	console.log("Show orders")
+	document.getElementById("showListOfOrders").style.display = "block";
+	document.getElementById("showOrders").style.display = "none";
+	//document.getElementById("orderData").style.display = "none";
+	console.log("in show");
+	var cId = document.getElementById("customerIdName").value;
+	console.log("customer Id is "+cId);
+	var xhr = new XMLHttpRequest();
+	if(window.XMLHttpRequest){
+		xhr = new XMLHttpRequest();
+	}
+	else if(window.ActiveXObject){
+		xhr = new ActiveXObject("Microsoft.XMLHTTP"); 	
+	}
+	//var preference = getPreference();
+	xhr.open("GET","CustomerViewOrdersServlet?customerId="+cId, true);
+	
+	xhr.onreadystatechange=function(){
+		if(xhr.readyState===4 && xhr.status==200){
+			var customerQuoteData = xhr.responseText;
+			console.log(customerQuoteData);
+			showApprovedOrder(customerQuoteData);
+		}
+		
+	}
+	xhr.send();
+	
+}
+
+function showQuotes(){
+	document.getElementById("showOrders").style.display = "block";
+}
+
+function showApprovedOrder(customerQuoteData){
+	var customerQuoteData = JSON.parse(customerQuoteData);
+	
+	// creating dynamic table
+    var ordersTable = document.createElement('table');
+    // set the table "id"
+	ordersTable.setAttribute('class', 'table table-hover');
+    ordersTable.setAttribute('id', 'ordersTable');
+    var arrHead = ['Order ID', 'Order Date', 'Total Order Value', 'Shipping Cost', 'Status', 'Show Invoice'];
+	console.log(customerQuoteData);
+    var tr = ordersTable.insertRow(-1);
+    // creating table header
+    for (var h = 0; h < arrHead.length; h++) {
+        var th = document.createElement('th');          
+        th.innerHTML = arrHead[h];
+		th.setAttribute('scope', 'col');
+        tr.appendChild(th);
+		th.style.background = '#007bff';
+		th.style.color = 'white';
+    }
+	console.log(customerQuoteData.length);
+    for (var c = 0; c <= customerQuoteData.length - 1; c++) {
+        	tr = ordersTable.insertRow(-1);
+        	// table data
+            var td = document.createElement('td');        
+            td = tr.insertCell(-1);
+			var orderId = customerQuoteData[c].orderId;
+			console.log(orderId);
+            td.innerHTML = customerQuoteData[c].orderId;                 // ADD VALUES TO EACH CELL.
+            td = tr.insertCell(-1);
+            td.innerHTML = customerQuoteData[c].orderDate; 
+            td = tr.insertCell(-1);
+            td.innerHTML = customerQuoteData[c].totalOrderValue; 
+            td = tr.insertCell(-1);
+			td.innerHTML = customerQuoteData[c].shippingCost; 
+            td = tr.insertCell(-1);
+			td.innerHTML = customerQuoteData[c].status; 
+            td = tr.insertCell(-1);
+			td.innerHTML = '<button type="submit" class="btn btn-primary" id="'+orderId+'" >Show Invoice</button>';
+			
+    }
+// appending table to div
+    document.getElementById('ordersWithInvoiceButton').appendChild(ordersTable);
+	document.getElementById('ordersWithInvoiceButton').style.display = "block";
 }
