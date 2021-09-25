@@ -24,7 +24,7 @@ public class CustomerViewInvoiceServlet extends HttpServlet {
 		if(session != null && session.getAttribute("customer") != null) {
 			String orderId = request.getParameter("orderId");
 			CustomerService cservice = new CustomerServiceImpl();
-			List<Object> invoice = cservice.showInvoice(orderId);
+			String invoice = cservice.showInvoice(orderId);
 			request.setAttribute("invoice", invoice);
 			RequestDispatcher rd = request.getRequestDispatcher("displayInvoice.jsp");
 			rd.forward(request, response);
