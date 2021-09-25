@@ -25,6 +25,11 @@ import com.orderprocessing.utils.DBUtils;
  */
 public class OrderDaoImpl implements OrderDao {
 	
+	LocalDate statusDate = LocalDate.now();
+	private static final String quote = "select ORDER_ID, ORDER_DATE, TOTAL_ORDER_VALUE, SHIPPING_COST from orders where CUSTOMER_ID=? and STATUS='Pending'";
+	private static final String quoteDetails = "SELECT orders.ORDER_ID, orders.ORDER_DATE, orders.TOTAL_ORDER_VALUE, orders.SHIPPING_COST, orders.SHIPPING_AGENCY, orders.STATUS, customer.CUSTOMER_ADDRESS_LINE1, customer.CUSTOMER_ADDRESS_CITY, customer.CUSTOMER_ADDRESS_STATE from orders INNER JOIN customer ON orders.CUSTOMER_ID = customer.CUSTOMER_ID WHERE ORDER_ID=?";
+	private static final String order = "select ORDER_ID, ORDER_DATE, SHIPPING_COST, TOTAL_ORDER_VALUE, STATUS from testorder where STATUS='Approved' or STATUS='Completed' and CUSTOMER_ID=?";
+	
 	Connection conn = null;
 	PreparedStatement prepStatement;
 	
@@ -39,11 +44,11 @@ public class OrderDaoImpl implements OrderDao {
 	 */
 	public String displayQuoteDetails(String customerId) throws JsonProcessingException {
 		ObjectMapper objectMapper = new ObjectMapper();
-		String sql = "select ORDER_ID, ORDER_DATE, TOTAL_ORDER_VALUE, SHIPPING_COST from orders where CUSTOMER_ID='" + customerId + "' and STATUS='Pending'";
 		try {
-			prepStatement = conn.prepareStatement(sql);
+			prepStatement = conn.prepareStatement(quote);
+			prepStatement.setString(1, customerId);
 			List<Order> quoteList = new ArrayList<>();
-			ResultSet rs = prepStatement.executeQuery(sql);
+			ResultSet rs = prepStatement.executeQuery();
 			while(rs.next()) {
 				Order quote = new Order();
 				quote.setOrderId(rs.getString("ORDER_ID"));
@@ -67,12 +72,11 @@ public class OrderDaoImpl implements OrderDao {
 	 */
 	public String displayDetailedQuote(String orderId) throws JsonProcessingException {
 		ObjectMapper objectMapper = new ObjectMapper();
-		String sql = "SELECT orders.ORDER_ID, orders.ORDER_DATE, orders.TOTAL_ORDER_VALUE, orders.SHIPPING_COST, orders.SHIPPING_AGENCY, orders.STATUS, customer.CUSTOMER_ADDRESS_LINE1, customer.CUSTOMER_ADDRESS_CITY, customer.CUSTOMER_ADDRESS_STATE from orders INNER JOIN customer ON orders.CUSTOMER_ID = customer.CUSTOMER_ID WHERE ORDER_ID=?";
 		try {
-			prepStatement = conn.prepareStatement(sql);
+			prepStatement = conn.prepareStatement(quoteDetails);
 			prepStatement.setString(1, orderId);
 			List<Object> quoteList = new ArrayList<>();
-			ResultSet rs = prepStatement.executeQuery(sql);
+			ResultSet rs = prepStatement.executeQuery();
 			quoteList.add(new Order(rs.getString(1), rs.getDate(2), rs.getFloat(3), rs.getFloat(4), rs.getString(5), rs.getString(6)));
 			quoteList.add(new Customer(rs.getString(7), rs.getString(8), rs.getString(9)));
 			String detailedQuoteToString = objectMapper.writeValueAsString(quoteList);
@@ -97,12 +101,12 @@ public class OrderDaoImpl implements OrderDao {
 	 *  else rollback.
 	 */
 	public void setQuoteStatus(String orderId) {
-		LocalDate statusDate = LocalDate.now();
+		
 		String sql = "update testorder set STATUS_DATE='" + statusDate + "', STATUS='Approved' where ORDER_ID=?";	
 		try {
 			prepStatement = conn.prepareStatement(sql);
 			prepStatement.setString(1, orderId);
-			int num = prepStatement.executeUpdate(sql);
+			int num = prepStatement.executeUpdate();
 			//System.out.println("Changed");
 			if(num > 0) {
 				conn.commit();
@@ -131,11 +135,11 @@ public class OrderDaoImpl implements OrderDao {
 	 */
 	public String displayOrderDetails(String customerId) throws JsonProcessingException {
 		ObjectMapper objectMapper = new ObjectMapper();
-		String sql = "select ORDER_ID, ORDER_DATE, SHIPPING_COST, TOTAL_ORDER_VALUE, STATUS from testorder where STATUS='Approved' or STATUS='Completed' and CUSTOMER_ID='" + customerId + "'";
 		try {
-			prepStatement = conn.prepareStatement(sql);
+			prepStatement = conn.prepareStatement(order);
+			prepStatement.setString(1, customerId);
 			List<Order> orderList = new ArrayList<>();
-			ResultSet rs = prepStatement.executeQuery(sql);
+			ResultSet rs = prepStatement.executeQuery();
 			while(rs.next()) {
 				Order order = new Order();
 				order.setOrderId(rs.getString(1));
@@ -160,5 +164,5 @@ public class OrderDaoImpl implements OrderDao {
 		}
 		return null; 
 	}
-
+	
 }
