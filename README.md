@@ -1,5 +1,11 @@
 # TheSemicolonsProject
 Team Semicolon's Project for CodeFury
 
-# Database Schema
+### Overview ###
+
+### Scope ###
+
+### Requirements ###
+
+### Database Schema ###
 ![Database Schema](https://github.com/dhruvinamdar/TheSemicolonsProject/blob/main/dbSchema.png)
