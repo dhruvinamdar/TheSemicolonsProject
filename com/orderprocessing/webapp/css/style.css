@@ -354,6 +354,11 @@ a:hover, a:focus {
     margin-top: 2rem;
     width: 1050px;
   }
+  .customerOrders{
+    margin-left: 20rem;
+    margin-top: 2rem;
+    width: 1050px;
+  }
 }
 
 .newQuote{
@@ -455,6 +460,9 @@ label{
 	border: 1px solid black;
 }
 
+#ordersTable{
+	background: white;	
+}
 thead{
 	background: #1089ff;
 	color:white;
@@ -471,3 +479,4 @@ thead{
 #ordersWithInvoiceButton{
 	display:none;
 }
+

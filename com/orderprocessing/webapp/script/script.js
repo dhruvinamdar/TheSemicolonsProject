@@ -1,9 +1,21 @@
+document.addEventListener('readystatechange', event => { 
+ 
+    if (event.target.readyState === "complete") {
+        var currentdate = new Date();
+	var datetime = "Last Login: " + currentdate.getDate() + "/" + currentdate.getMonth() 
+		+ "/" + currentdate.getFullYear() + " @ " 
+		+ currentdate.getHours() + ":" 
+		+ currentdate.getMinutes() + ":" + currentdate.getSeconds();
+	document.getElementById("LoginDate").innerHTML = datetime;
+	console.log(datetime);
+
+    }
+});
 
 // ================================================== Employee =======================================================================================
 
 // ------------------------------------- AJAX Request to Get Customer Details and Product Data ------------------------------------------------------
 function showProductTable(event){
-	event.preventDefault();
 	var cId = document.getElementById("customerId").value;
 	console.log("customer Id is "+cId);
 	var xhr = new XMLHttpRequest();
@@ -200,7 +212,7 @@ function createQuote(event){
 }
 
 // -------------------------------- Display Last Login DateTime ---------------------------------------------------------------
-function displayDate(){
+/*function displayDate(){
 	var currentdate = new Date();
 	var datetime = "Last Login: " + currentdate.getDate() + "/" + currentdate.getMonth() 
 		+ "/" + currentdate.getFullYear() + " @ " 
@@ -210,6 +222,7 @@ function displayDate(){
 	console.log(datetime);
 	console.log("abc");
 }
+*/
 
 // ================================================================================================================================
 
@@ -315,12 +328,10 @@ function populateHiddenField(id){
 }
 
 // ------------------------------------ Show Products ---------------------------------------------------------------------------------------------
-function showOrders(event){
+function showListOfOrders(event){
 	event.preventDefault();
-	console.log("Show orders")
-	document.getElementById("showListOfOrders").style.display = "block";
-	document.getElementById("showOrders").style.display = "none";
-	//document.getElementById("orderData").style.display = "none";
+	console.log("Show orders");
+	document.getElementById('orderList').style.display = "none";
 	console.log("in show");
 	var cId = document.getElementById("customerIdName").value;
 	console.log("customer Id is "+cId);
@@ -347,7 +358,7 @@ function showOrders(event){
 }
 
 function showQuotes(){
-	document.getElementById("showOrders").style.display = "block";
+	document.getElementById("customerOrders").style.display = "none";
 }
 
 function showApprovedOrder(customerQuoteData){
@@ -392,6 +403,18 @@ function showApprovedOrder(customerQuoteData){
 			
     }
 // appending table to div
+	
     document.getElementById('ordersWithInvoiceButton').appendChild(ordersTable);
+	document.getElementById('orderList').style.display = "none";
 	document.getElementById('ordersWithInvoiceButton').style.display = "block";
 }
+
+function showQuoteForm(){
+	document.getElementById("customerOrders").style.display = "none";
+	document.getElementById("customer").style.display = "block";	
+}
+
+function showOrderForm(){
+	document.getElementById("customer").style.display = "none";	
+	document.getElementById("customerOrders").style.display = "block";	
+} 

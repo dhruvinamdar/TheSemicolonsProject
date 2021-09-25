@@ -18,7 +18,7 @@
             <ul class="navbar-nav mr-auto">
               <li class="nav-item">
               <span class="employeeData">
-	               <input class="user-info" value="Welcome">
+	               <span>Welcome-</span>
 	               <input class="user-info" value="${employee.employeeName}" readonly>
               </span>
               <span class = "employeeData user-info" id="LoginDate">
