@@ -25,7 +25,7 @@ public interface CustomerService {
 	
 	public String displayOrder(String customerId);
 	
-	public List<Object> showInvoice(String orderId);
+	public String showInvoice(String orderId);
 
 	
 }

@@ -101,7 +101,6 @@ public class CustomerServiceImpl implements CustomerService {
 		try {
 			return orderDao.displayOrderDetails(customerId);
 		} catch (JsonProcessingException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return null;
@@ -111,8 +110,13 @@ public class CustomerServiceImpl implements CustomerService {
 	 * Method to use InvoiceDaoImpl object and call display order method in OrderDaoImpl and 
 	 * return Array List of type Object containing objects of type Order, Product, OrderLine, Customer, Invoice.
 	 */
-	public List<Object> showInvoice(String orderId) {
-		return invoiceDao.displayOrderInvoice(orderId);
+	public String showInvoice(String orderId) {
+		try {
+			return invoiceDao.displayOrderInvoice(orderId);
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 	
