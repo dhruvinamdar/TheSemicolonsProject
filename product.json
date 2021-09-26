@@ -1,0 +1,62 @@
+[
+    {
+        "productId": "PROD001",
+        "price": "112990.50",
+        "productName": "Apple 13 MacBook Pro",
+        "category": "Electronics"
+    },
+    {
+        "productId": "PROD002",
+        "price": "70000.10",
+        "productName": "Samsung Galaxy S21",
+        "category": "Mobile"
+    },
+    {
+        "productId": "PROD003",
+        "price": "10000.05",
+        "productName": "Laptop Table",
+        "category": "Furniture"
+    },
+    {
+        "productId": "PROD004",
+        "price": "525.20",
+        "productName": "Parker Black Ball Pen",
+        "category": "Stationery"
+    },
+    {
+        "productId": "PROD005",
+        "price": "3690.10",
+        "productName": "Green Soul Study Chair",
+        "category": "Furniture"
+    },
+    {
+        "productId": "PROD006",
+        "price": "849.99",
+        "productName": "Milton Water Bottle",
+        "category": "Bottle"
+    },
+    {
+        "productId": "PROD007",
+        "price": "650.89",
+        "productName": "Core Java Book",
+        "category": "Book"
+    },
+    {
+        "productId": "PROD008",
+        "price": "29990.90",
+        "productName": "Sony PS4 1TB",
+        "category": "Games"
+    },
+    {
+        "productId": "PROD009",
+        "price": "1469.99",
+        "productName": "Van Heusen Backpack",
+        "category": "Bags"
+    },
+    {
+        "productId": "PROD010",
+        "price": "6228.80",
+        "productName": "SG Full Cricket Kit",
+        "category": "Sports"
+    }
+]
