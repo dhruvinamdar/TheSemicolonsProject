@@ -22,8 +22,12 @@ This Readme talks about the project developed by team "Semicolons" for the proje
   * JDBC Connector: `mysql-connector-java-8.0.25.jar`
   * JSON Functionality:  
     * `jackson-databind-2.4.3.jar`
-    *  `jackson-core-2.4.3.jar`
-    *  `jackson-annotations-2.4.3.jar`
+    * `jackson-core-2.4.3.jar`
+    * `jackson-annotations-2.4.3.jar`
+  * JSTL Functionality:  
+    * 'jstl-1.2.jar'
+    * 'standard-1.1.2'
+
 * __Server__: `Apache Tomcat v9.0`
 * __IDE__: `Eclipse IDE for Enterprise Java and Web Developers - 2021-06`
 * __Data-interchange format__: `JSON`
@@ -34,15 +38,21 @@ This Readme talks about the project developed by team "Semicolons" for the proje
   * The employee is capable of creating a new quote by choosing the products that need to be put. He has the choice of choosing a particular customer that already exists and then generate a new quote.
   * The employee can also import products to the database by providing a list of products in a JSON file. Only a specific structure of a JSON object is accepted. The employee is notified of the number of products that have been successfully imported.
   * Overheads like the Shipping Cost and the GST is dynamically calculated once the Employee creates the order.
-  * No new employee can be created in the application as of now.
+  * No new employee can be created via the application as of now.
 
 * __Customer__
   * The customer can see a list of quotes that he has received from the employee. Then he can choose to see a particular order and approve it.
   * The customer can also see a list of invoices of his previous orders (approved more than a day ago).
   * He can also print a PDF of his invoice.
-  * No new customer can be created in the application as of now.
+  * No new customer can be created via the application as of now.
 
 ### Requirements ###
+
+### How to Run the Application ###
+* Clone the project via HTTP/SSL
+* Create the Database for the application in MySQL Workbench via the script given in the docs folder. 
+* Import the .jars mentioned in the stack and add it to the Build Path via the Deployment Assembly Option in Eclipse.
+* Run the project on an Apache Tomcat Server.
 
 ### Database Schema ###
 ![Database Schema](https://github.com/dhruvinamdar/TheSemicolonsProject/blob/main/dbSchema.png)
