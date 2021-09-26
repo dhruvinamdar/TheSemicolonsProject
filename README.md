@@ -47,12 +47,22 @@ This Readme talks about the project developed by team "Semicolons" for the proje
   * No new customer can be created via the application as of now.
 
 ### Requirements ###
+* `jdk 16`
+* `mysql 8.0`
+* `apache-tomcat 9.0.52`
 
 ### How to Run the Application ###
 * Clone the project via HTTP/SSL
 * Create the Database for the application in MySQL Workbench via the script given in the docs folder. 
 * Import the .jars mentioned in the stack and add it to the Build Path via the Deployment Assembly Option in Eclipse.
 * Run the project on an Apache Tomcat Server.
+
+### Future Scope ###
+
+ * Give Employee rights to create a new Customer and enter details.
+ * Give Customer an option to select their Order on their own.
+ * Add third-party Payment Gateway APIs.
+ * Add images for the product catalogue.
 
 ### Database Schema ###
 ![Database Schema](https://github.com/dhruvinamdar/TheSemicolonsProject/blob/main/dbSchema.png)
