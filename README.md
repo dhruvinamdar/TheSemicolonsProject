@@ -50,7 +50,7 @@ This Readme talks about the project developed by team "Semicolons" for the proje
   * No new customer can be created via the application as of now.
 
 ### Database Schema ###
-![Database Schema](https://github.com/dhruvinamdar/TheSemicolonsProject/blob/main/doc/DBSchema.jpeg)
+![Database Schema](https://github.com/dhruvinamdar/TheSemicolonsProject/blob/main/docs/DBSchema.jpeg)
 
 ### Requirements ###
 * `jdk 16`
@@ -64,7 +64,7 @@ This Readme talks about the project developed by team "Semicolons" for the proje
 * Run the project on an Apache Tomcat Server.
 
 ### Class Diagram ###
-![Class Diagram](https://github.com/dhruvinamdar/TheSemicolonsProject/blob/main/doc/Class%20Diagram.jpeg)
+![Class Diagram](https://github.com/dhruvinamdar/TheSemicolonsProject/blob/main/docs/Class%20Diagram.jpg)
 
 ### Future Scope ###
 
