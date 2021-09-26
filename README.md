@@ -15,6 +15,9 @@ This Readme talks about the project developed by team "Semicolons" for the proje
 1. Choosing a particular quote sent by the employee and approving it.
 2. Getting a display of invoices of the customer's previously approved orders. However the invoices will only be shown if the order has been approved more than a day ago.
 
+### Database Schema ###
+![High Level View](https://github.com/dhruvinamdar/TheSemicolonsProject/blob/main/High Level View.jpeg)
+
 ### Stack ###
 * __Frontend__: `HTML`, `CSS`, `Bootstrap`, `JavaScript`, `AJAX`, `JSP`
 * __Backend__: `Servlets`,`Java`, `MySQL`
@@ -65,4 +68,4 @@ This Readme talks about the project developed by team "Semicolons" for the proje
  * Add images for the product catalogue.
 
 ### Database Schema ###
-![Database Schema](https://github.com/dhruvinamdar/TheSemicolonsProject/blob/main/dbSchema.png)
+![Database Schema](https://github.com/dhruvinamdar/TheSemicolonsProject/blob/main/DBSchema.jpeg)
