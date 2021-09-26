@@ -76,14 +76,21 @@ function addProduct(event, id){
             var quantityIdx = "quantity" + i;
             var quantity = document.getElementById(quantityIdx).value;
             if((productCategory.localeCompare("Level1") == '0') && (quantity.localeCompare('') != '0')){
-                shippingCost = shippingCost + parseFloat( productPrice * 5  / 100);
+                var value = parseFloat(productPrice * parseInt(quantity));
+				shippingCost = shippingCost + parseFloat( value * 5  / 100);
+				console.log("shipping cost "+ i + shippingCost);
             }
             else if((productCategory.localeCompare("Level2") == '0') && (quantity.localeCompare('') != '0')){
-                shippingCost = shippingCost + parseFloat( productPrice * 3  / 100);
+                var value = parseFloat(productPrice * parseInt(quantity));
+				console.log(value)
+				shippingCost = shippingCost + parseFloat( value * 3  / 100);
+				console.log("shipping cost "+ i + shippingCost);
             }
             else{
                 if(quantity.localeCompare('') != '0'){
-                    shippingCost = shippingCost + parseFloat( productPrice * 2  / 100);
+					var value = parseFloat(productPrice * parseInt(quantity));
+                    shippingCost = shippingCost + parseFloat( value * 2  / 100);
+					console.log("shipping cost "+ i + shippingCost);
                 }
             }
 
