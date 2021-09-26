@@ -15,7 +15,7 @@ This Readme talks about the project developed by team "Semicolons" for the proje
 1. Choosing a particular quote sent by the employee and approving it.
 2. Getting a display of invoices of the customer's previously approved orders. However the invoices will only be shown if the order has been approved more than a day ago.
 
-### Database Schema ###
+### High Level View ###
 ![High Level View](https://github.com/dhruvinamdar/TheSemicolonsProject/blob/main/docs/High%20Level%20View.jpeg)
 
 ### Stack ###
@@ -49,6 +49,9 @@ This Readme talks about the project developed by team "Semicolons" for the proje
   * He can also print a PDF of his invoice.
   * No new customer can be created via the application as of now.
 
+### Database Schema ###
+![Database Schema](https://github.com/dhruvinamdar/TheSemicolonsProject/blob/main/doc/DBSchema.jpeg)
+
 ### Requirements ###
 * `jdk 16`
 * `mysql 8.0`
@@ -60,6 +63,9 @@ This Readme talks about the project developed by team "Semicolons" for the proje
 * Import the .jars mentioned in the stack and add it to the Build Path via the Deployment Assembly Option in Eclipse.
 * Run the project on an Apache Tomcat Server.
 
+### Class Diagram ###
+![Class Diagram](https://github.com/dhruvinamdar/TheSemicolonsProject/blob/main/doc/Class%20Diagram.jpeg)
+
 ### Future Scope ###
 
  * Give Employee rights to create a new Customer and enter details.
@@ -67,5 +73,4 @@ This Readme talks about the project developed by team "Semicolons" for the proje
  * Add third-party Payment Gateway APIs.
  * Add images for the product catalogue.
 
-### Database Schema ###
-![Database Schema](https://github.com/dhruvinamdar/TheSemicolonsProject/blob/main/DBSchema.jpeg)
+
