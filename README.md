@@ -16,7 +16,7 @@ This Readme talks about the project developed by team "Semicolons" for the proje
 2. Getting a display of invoices of the customer's previously approved orders. However the invoices will only be shown if the order has been approved more than a day ago.
 
 ### Database Schema ###
-![High Level View](https://github.com/dhruvinamdar/TheSemicolonsProject/blob/main/High Level View.jpeg)
+![High Level View](https://github.com/dhruvinamdar/TheSemicolonsProject/blob/main/High%20Level%20View.jpeg)
 
 ### Stack ###
 * __Frontend__: `HTML`, `CSS`, `Bootstrap`, `JavaScript`, `AJAX`, `JSP`
