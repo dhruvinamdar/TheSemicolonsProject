@@ -62,6 +62,9 @@ This Readme talks about the project developed by team "Semicolons" for the proje
 * Create the Database for the application in MySQL Workbench via the script given in the docs folder. 
 * Import the .jars mentioned in the stack and add it to the Build Path via the Deployment Assembly Option in Eclipse.
 * Run the project on an Apache Tomcat Server.
+* Use the products.json file in the docs folder for testing on the Import Products Function
+* Check database for valid Employee and Customer credentials
+* Populate Customer and Employee tables with scripts given in docs
 
 ### Class Diagram ###
 ![Class Diagram](https://github.com/dhruvinamdar/TheSemicolonsProject/blob/main/docs/Class%20Diagram.jpg)
