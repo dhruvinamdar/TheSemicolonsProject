@@ -25,8 +25,8 @@ This Readme talks about the project developed by team "Semicolons" for the proje
     * `jackson-core-2.4.3.jar`
     * `jackson-annotations-2.4.3.jar`
   * JSTL Functionality:  
-    * 'jstl-1.2.jar'
-    * 'standard-1.1.2'
+    * `jstl-1.2.jar`
+    * `standard-1.1.2`
 
 * __Server__: `Apache Tomcat v9.0`
 * __IDE__: `Eclipse IDE for Enterprise Java and Web Developers - 2021-06`
