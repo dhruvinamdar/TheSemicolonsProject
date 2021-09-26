@@ -1,62 +1,54 @@
 [
     {
-        "productId": "PROD001",
-        "price": "112990.50",
         "productName": "Apple 13 MacBook Pro",
-        "category": "Electronics"
+        "category": "Level1",
+        "price": 112990.50
     },
     {
-        "productId": "PROD002",
-        "price": "70000.10",
+        
         "productName": "Samsung Galaxy S21",
-        "category": "Mobile"
+        "category": "Level1",
+        "price": 70000.10
     },
     {
-        "productId": "PROD003",
-        "price": "10000.05",
+        
         "productName": "Laptop Table",
-        "category": "Furniture"
+        "category": "Level2",
+        "price": 10000.05
     },
     {
-        "productId": "PROD004",
-        "price": "525.20",
         "productName": "Parker Black Ball Pen",
-        "category": "Stationery"
+        "category": "Level3",
+        "price": 525.20
     },
     {
-        "productId": "PROD005",
-        "price": "3690.10",
         "productName": "Green Soul Study Chair",
-        "category": "Furniture"
+        "category": "Level2",
+        "price": 3690.10
     },
     {
-        "productId": "PROD006",
-        "price": "849.99",
         "productName": "Milton Water Bottle",
-        "category": "Bottle"
+        "category": "Level3",
+        "price": 849.99
     },
     {
-        "productId": "PROD007",
-        "price": "650.89",
         "productName": "Core Java Book",
-        "category": "Book"
+        "category": "Level3",
+        "price": 650.89
     },
     {
-        "productId": "PROD008",
-        "price": "29990.90",
         "productName": "Sony PS4 1TB",
-        "category": "Games"
+        "category": "Level1",
+        "price": 29990.90
     },
     {
-        "productId": "PROD009",
-        "price": "1469.99",
         "productName": "Van Heusen Backpack",
-        "category": "Bags"
+        "category": "Level2",
+        "price": 1469.99
     },
     {
-        "productId": "PROD010",
-        "price": "6228.80",
         "productName": "SG Full Cricket Kit",
-        "category": "Sports"
+        "category": "Level2",
+        "price": 6228.80
     }
 ]
